@@ -1,0 +1,22 @@
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely need to edit after that.
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'jekyll serve'. If you change this file, please restart the server process.
+
+# Site settings
+title: kvark's dev blog
+#email: kvarkus@gmail.com
+description: > #
+  The history of kvark's ideas and hacking experiments.
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "http://kvark.github.io" # the base hostname & protocol for your site
+#twitter_username: xxx
+github_username:  kvark
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
