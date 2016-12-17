@@ -6,6 +6,7 @@ categories: 3d api
 ---
 ## Getting into Trouble
 It started with AMD's Mantle in 2013. An API that was explicit enough to squeeze all the juice of AMD's cards (contrary to OpenGL/D3D11), yet being abstract enough to support a wide range of them (contrary to GNM). Then we got a full zoo of APIs, fragmenting the desktop platform like it's 1999 once again. At the same time, the Web was adopting and enjoying WebGL goodness, which works quite well with Javascript (as in - both are sufficiently slow, limited, and high-level). Time has changed though, and now we are seeing a combination of the following factors asking for a new API for the Web:
+  
   - WebAssembly is getting ready. It is faster and better threaded.
   - WebVR is getting ready. It is inevitable to watch the cat videos in 3D. VR stresses both the hardware and the client side, for the need to issue commands separately for each eye rendering.
   - A variety of efficient next-gen APIs on the desktop/mobile has been adopted and proved to be efficient, as mentioned.
@@ -18,6 +19,7 @@ Fast forward about a month and a half, I got the prototype operational. Here are
 ### WebIDL specification
 
 It's the OOP-like way to describe Web interfaces. It has to have one file per public class interface. I ended up exposing the following classes:
+  
   - `WebMetalCommandBuffer` - for command storage
   - `WebMetalDevice` - for resource management
   - `WebMetalRenderCommandEncoder` - for encoding the graphics commands
