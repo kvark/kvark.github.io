@@ -1,0 +1,78 @@
+---
+layout: post
+title:  "Prototyping a new 3D API for the Web"
+date:   2016-12-16 22:22:22 -0500
+categories: 3d api
+---
+## Getting into Trouble
+It started with AMD's Mantle in 2013. An API that was explicit enough to squeeze all the juice of AMD's cards (contrary to OpenGL/D3D11), yet being abstract enough to support a wide range of them (contrary to GNM). Then we got a full zoo of APIs, fragmenting the desktop platform like it's 1999 once again. At the same time, the Web was adopting and enjoying WebGL goodness, which works quite well with Javascript (as in - both are sufficiently slow, limited, and high-level). Time has changed though, and now we are seeing a combination of the following factors asking for a new API for the Web:
+  - WebAssembly is getting ready. It is faster and better threaded.
+  - WebVR is getting ready. It is inevitable to watch the cat videos in 3D. VR stresses both the hardware and the client side, for the need to issue commands separately for each eye rendering.
+  - A variety of efficient next-gen APIs on the desktop/mobile has been adopted and proved to be efficient, as mentioned.
+
+So I asked myself, what does it take to roll in a new API in a browser? I picked Metal as a baseline for the API, given it's the simplest of all the next-gen APIs to date. I decided to implement the backend in Vulkan directly, since I'm on Linux, and transcribing to OpenGL would not be nearly as convincing in the end. Finally, I took Servo for the browser, since I'm in love with Rust and my work would benefit from getting a bit closer with Servo internals.
+
+## Implementation
+Fast forward about a month and a half, I got the prototype operational. Here are the layers of the implementation:
+
+### WebIDL specification
+
+It's the OOP-like way to describe Web interfaces. It has to have one file per public class interface. I ended up exposing the following classes:
+  - `WebMetalCommandBuffer` - for command storage
+  - `WebMetalDevice` - for resource management
+  - `WebMetalRenderCommandEncoder` - for encoding the graphics commands
+  - `WebMetalRenderPipelineState` - for the graphics state
+  - `WebMetalRenderingContest` - for the context acquired from the canvas
+  - `WebMetalTargetView` - for the draw target surface
+
+I figured that the exact Metal API would not fit perfectly, so I made a few adjustments: I made the execution queue a part of the rendering context, and I added the target views.
+
+### Rust bindings
+
+Servo's build process parses the IDLs and generates the corresponding Rust traits. But you still have to actually implement those on the structs representing DOM elements.
+
+When a new rendering context is created by the script, I ask the Constellation (Servo's component gluing it all together) to create me a 
+thread the UI process side. They communicate via IPC channels afterwards. It's not a single channel - different DOM elements communicate with different sub-threads of the painter using their own IPC channels. The device, for example, lives on a separate thread spawned by the painter and receives commands via it's own IPC channel.
+
+### Painter
+
+This is where stuff gets interesting. We are separated by an IPC from the client, and we own the graphics context, so we do all sorts of behind the scenes things to make it work:
+  - dispatch messages from the script
+  - spawn multiple threads for different components and synchronize them when needed
+  - track constant buffers, so that they are associated with fences and getting recycled properly
+  - talk to the underlying Vulkan wrapper
+  - read the frame and send to WebRender for displaying on the canvas
+
+### Underground
+
+Here comes the lowest part of the implementation stack - a library that hides Vulkan from the painter. I had it as a Servo component named `webmetal`. Under the hood, I used [vk-sys](https://crates.io/crates/vk-sys) directly and wrapped Vulkan concepts with associated data in simple structs like `Texture`, `Device`, or `CommandBuffer`. Some of them have to be sendable for being actually transferred back and forth to the script side. This allowed me to avoid an internal handle management with some map lookups - I just used the Vulkan objects (that came from an IPC channel) directly.
+
+This level got just a few internal modules:
+  - command module for everything about command recording and submission
+  - device module for resource creation
+  - main module for the rest
+
+One aspect of Vulkan required special care - state transitions. I settled on a paradigm that each resource has a "default" state, with which it's getting initialized upon creation. When a command buffer starts using the resource, it safely assumes the "default" state. It is free to change the state multiple times, and it keeps track of all the resources that participate, but then it gets automatically converts the state to "default" upon finishing the encoding. It may not be optimally efficient, but it's automatic enough to be safely hidden from this level API surface.
+
+## Problems
+
+ 1. First of all, Rust building of Servo is pretty damn slow, especially on my Broadwell ULV CPU equipped laptop. Biggest offender is the `script` component, which includes both the IDLs and their bindings.
+ 2. We can't directly display the Vulkan surface, since Servo is rendering via OpenGL. Rewriting Servo's WebRender into Vulkan would be a bigger task than I could afford in my spare time, so I followed the readback context path of WebGL context. It appears to have a huge lag of up to several seconds, but it works.
+ 3. We can't encode the command buffers in parallel on the script side, since it's executing in a separate process (content) from the canvas (UI process). Thus, I had to come up something...
+ 
+### Threading
+
+The most challenging issue to solve was - how to encode the command buffers in parallel if we are in a different process? I figured that we can automagically create threads by the 
+and associate them with the encoders on the script side whenever one is created. The `WebMetalRenderCommandEncoder` would then only send commands to its associated thread, which joins the painter thread once the encoding is completed.
+
+I've also put the Vulkan device in its own thread, serving requests from both the content process (script) and the painter. That allows creating resources simultaneously with any other actions, like swapping/reading back a frame. And it's perfectly safe since nothing else had access to `vkDevice`, so it got properly externally synchronized.
+
+Given so many threads on the UI process side (the painter and friends), it also rised a challenge of preventing threads from waiting on each other. This includes preventing the script from waiting for the painter too. I made sure the implementation never does synchronized calls on a frame by frame basis, by either caching the resources on the script side, or recycling them carefully on the painter side.
+
+## Result
+
+You can find the example code [here](https://github.com/kvark/slides/blob/master/data/webmetal/test2-triangle.html) and even try to run it yourself. The performance is way off due to the readback logistics, but it works! This is my beloved vulkanized triangle in the browser:
+
+![WebMetal Triangle](https://github.com/kvark/slides/raw/master/data/webmetal/triangle.png)
+
+I made a small presentation to show off the work at Mozilla All Hands, you can find the [slides](https://github.com/kvark/slides/blob/master/WebMetal_HawaiiAllHands.pdf). The implementation code available at https://github.com/kvark/servo/tree/webmetal
