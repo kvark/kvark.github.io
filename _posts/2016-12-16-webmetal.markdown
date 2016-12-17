@@ -5,7 +5,7 @@ date:   2016-12-16 22:22:22 -0500
 categories: 3d api
 ---
 ## Getting into Trouble
-It started with AMD's Mantle in 2013. An API that was explicit enough to squeeze all the juice of AMD's cards (contrary to OpenGL/D3D11), yet being abstract enough to support a wide range of them (contrary to GNM). Then we got a full zoo of APIs, fragmenting the desktop platform like it's 1999 once again. At the same time, the Web was adopting and enjoying WebGL goodness, which works quite well with Javascript (as in - both are sufficiently slow, limited, and high-level). Time has changed though, and now we are seeing a combination of the following factors asking for a new API for the Web:
+It started with AMD's Mantle in 2013. An API that was explicit enough to squeeze all the juice out of AMD's cards (contrary to OpenGL/D3D11), yet being abstract enough to support a wide range of them (contrary to GNM). Then we got a full zoo of APIs, fragmenting the desktop platform like it's 1999 once again. At the same time, the Web was adopting and enjoying WebGL goodness, which works quite well with Javascript (as in - both are sufficiently slow, limited, and high-level). Time has changed though, and now we are seeing a combination of the following factors asking for a new API for the Web:
   
   - WebAssembly is getting ready. It is faster and better threaded.
   - WebVR is getting ready. It is inevitable to watch the cat videos in 3D. VR stresses both the hardware and the client side, for the need to issue commands separately for each eye rendering.
@@ -18,14 +18,14 @@ Fast forward about a month and a half, I got the prototype operational. Here are
 
 ### WebIDL specification
 
-It's the OOP-like way to describe Web interfaces. It has to have one file per public class interface. I ended up exposing the following classes:
+WebIDL is the OOP-like way to describe Web interfaces. It has to have one file per public class interface. I ended up exposing the following classes:
   
-  - `WebMetalCommandBuffer` - for command storage
-  - `WebMetalDevice` - for resource management
-  - `WebMetalRenderCommandEncoder` - for encoding the graphics commands
-  - `WebMetalRenderPipelineState` - for the graphics state
-  - `WebMetalRenderingContest` - for the context acquired from the canvas
-  - `WebMetalTargetView` - for the draw target surface
+  - `WebMetalCommandBuffer` - command storage
+  - `WebMetalDevice` - resource management
+  - `WebMetalRenderCommandEncoder` - encoding the graphics commands
+  - `WebMetalRenderPipelineState` - the graphics state
+  - `WebMetalRenderingContest` - the context acquired from the canvas
+  - `WebMetalTargetView` - the draw target surface
 
 I figured that the exact Metal API would not fit perfectly, so I made a few adjustments: I made the execution queue a part of the rendering context, and I added the target views.
 
@@ -33,8 +33,7 @@ I figured that the exact Metal API would not fit perfectly, so I made a few adju
 
 Servo's build process parses the IDLs and generates the corresponding Rust traits. But you still have to actually implement those on the structs representing DOM elements.
 
-When a new rendering context is created by the script, I ask the Constellation (Servo's component gluing it all together) to create me a 
-thread the UI process side. They communicate via IPC channels afterwards. It's not a single channel - different DOM elements communicate with different sub-threads of the painter using their own IPC channels. The device, for example, lives on a separate thread spawned by the painter and receives commands via it's own IPC channel.
+When a new rendering context is created by the script, I ask the Constellation (Servo's component gluing it all together) to create me a painter thread on the UI process side. They communicate via IPC channels afterwards. It's not a single channel - different DOM elements communicate with different sub-threads of the painter using their own IPC channels. The device, for example, lives on a separate thread spawned by the painter and receives commands via it's own IPC channel.
 
 ### Painter
 
@@ -54,7 +53,7 @@ This level got just a few internal modules:
   - device module for resource creation
   - main module for the rest
 
-One aspect of Vulkan required special care - state transitions. I settled on a paradigm that each resource has a "default" state, with which it's getting initialized upon creation. When a command buffer starts using the resource, it safely assumes the "default" state. It is free to change the state multiple times, and it keeps track of all the resources that participate, but then it gets automatically converts the state to "default" upon finishing the encoding. It may not be optimally efficient, but it's automatic enough to be safely hidden from this level API surface.
+One aspect of Vulkan required special care - state transitions. I settled on a paradigm that each resource has a "default" state, with which it's getting initialized upon creation. When a command buffer starts using a resource, it safely assumes the "default" state. It is free to change the state multiple times, and it keeps track of all the resources that participate, but then it automatically converts the state to "default" upon finishing the encoding. It may not be optimally efficient, but it's automatic enough to be safely hidden from this level API surface.
 
 ## Problems
 
@@ -64,12 +63,15 @@ One aspect of Vulkan required special care - state transitions. I settled on a p
  
 ### Threading
 
-The most challenging issue to solve was - how to encode the command buffers in parallel if we are in a different process? I figured that we can automagically create threads by the 
-and associate them with the encoders on the script side whenever one is created. The `WebMetalRenderCommandEncoder` would then only send commands to its associated thread, which joins the painter thread once the encoding is completed.
+The most challenging issue to solve was - how to encode the command buffers in parallel if we are in a different process? I figured that we can automagically create threads by the painter and associate them with the encoders on the script side whenever one is created. The `WebMetalRenderCommandEncoder` would then only send commands to its associated thread, which joins the painter thread once the encoding is completed.
 
 I've also put the Vulkan device in its own thread, serving requests from both the content process (script) and the painter. That allows creating resources simultaneously with any other actions, like swapping/reading back a frame. And it's perfectly safe since nothing else had access to `vkDevice`, so it got properly externally synchronized.
 
-Given so many threads on the UI process side (the painter and friends), it also rised a challenge of preventing threads from waiting on each other. This includes preventing the script from waiting for the painter too. I made sure the implementation never does synchronized calls on a frame by frame basis, by either caching the resources on the script side, or recycling them carefully on the painter side.
+Given so many threads on the UI process side (painter and friends), it also raised a challenge of preventing threads from waiting on each other. This includes preventing the script from waiting for the painter too. I made sure the implementation never does synchronized calls on a frame by frame basis, by either caching the resources on the script side, or recycling them carefully on the painter side.
+
+### Shaders
+
+I figured that the easiest way to get SPIR-V shaders is to provide them in GLSL from the script, and then convert using [glsl_to_spirv](https://crates.io/crates/glsl-to-spirv). However, straightforward conversion from a pair of VS-FS shaders did not produce the desired result. This was caused by the fact that GLSL shader objects are no longer linked into a single program when converted to SPIRV, they are "compiled" individually, and so the user becomes responsible to match all the inputs and outputs between stages. Thus, I had to manually annotate every I/O variable in GLSL with `layout(location = X)`.
 
 ## Result
 
