@@ -1,0 +1,99 @@
+---
+layout: post
+title:  "Building a parallel ECS in Rust"
+date:   2017-03-08 11:11:11 -0500
+categories: ecs rust
+---
+
+This post is about my endeavors in the space of Entity Component Systems for Rust. I'll go through the history of Specs ("Specs Parallel ECS"), it's present and future.
+
+## Introduction
+
+Rust gamedev ecosystem back in the day was young, we tried to build everything from scratch. For many, learning to program in Rust was correlated to learning the modern approaches to build complex systems, including functional paradigm, data-oriented development, and the general idea of splitting the responsibility between semi-independent blocks. Consequently, I realized that:
+
+  1. Entity Component Systems (ECS) are the most scalable way to build a game in terms of complexity.
+  2. ECS is also the most performance-friendly way to process large amounts of game data/entities.
+  3. ECS requires accurate data manipulation and careful synchronization to be implemented nicely.
+  4. Rust provides all of that, thus being a perfect tool for the job.
+
+## Simplecs
+
+AFAIK, I was one of the first people to experiment with ECS in Rust. My first little implementation was called [simplecs](https://github.com/kvark/simplecs) for "Simple ECS". It provided a macro that generated simple world and entity structs like these:
+
+```rust
+struct World {
+    field_a: Vec<TypeA>,
+    field_b: Vec<TypeB>,
+    entities: Vec<Entity>,
+}
+
+struct Id<T>(u32, PhantomData<T>);
+
+struct Entity {
+    field_a: Option<Id<TypeA>>,
+    field_b: Option<Id<TypeB>>,
+}
+```
+
+It provided just a little logic, but that little was usable straight away, safe and performant, even if not not ideally ergonomic. For some time, I thought that this is all you need for a ECS, wondering about other people's attempts, which appeared monstrous and complex to me.
+
+## Brewing the ideas
+
+In time, I realized what `simplecs` was missing:
+
+  - parallel processing. This is the biggest and most difficult part of the ECS, which no Rust library had solved by that time.
+  - entity/component deletion. It's a basic must-have feature that is difficult to get with this design.
+  - convenient systems API with filtering over entities that have required components.
+
+I was thinking about this tentatively over some time, until a [discussion on Amethyst](https://github.com/amethyst/amethyst/issues/10) got my attention. I knew how *not* to implement ECS, and in arguing with people and discussing their proposals, I had a chance to re-evaluate all my prior presumptions of the design. In particular, I realized that entities knowing about their components introduces coupling of systems, which prevents implementing the deletion of entities/components nicely. Making the component storages be aware of the entities they have data for, and so turning entities into dump integers - appeared to be conceptually beautiful, and I just needed to find my way to an implementation.
+
+Another important key stone was the realization that a storage can just be wrapped into `RwLock` in order for multiple systems to use it for processing. The world could just store a map of type -> storage for access by the systems. The implementation had a few quirks, but the design puzzle pieces started to fit together nicely...
+
+Locking the storages in random order posed a deadlock hazard, so I figured, at least for the short term, that the locking step should be sequential. That was quite a restricting factor in achieving the true parallelism, but we still got some! And by "we" I mean me and @cherratt, who joined early and did a number of major improvements, including [pulse](https://github.com/slide-rs/pulse)-based signaling, efficient bit sets, and the "join" syntax of selecting the components for system to process.
+
+In April 2016 [specs](https://github.com/slide-rs/specs) was born. It quickly gained traction and praise of the community. So quickly that it made me feel sad about [gfx-rs](https://github.com/gfx-rs/gfx), which took orders of magnitude more effort and not received nearly as much approval. In `specs`, your system has 2 stages of execution - component fetches and processing:
+
+```rust
+fn run(&self, arg: specs::RunArg, time: Delta) { // that's how a custom system processing is implemented
+    let (mut bullet, entities) = arg.fetch(|w| { // first stage - fetching the components/entities
+        (w.write::<Bullet>(), w.entities())
+    });
+    for (b, e) in (&mut bullet, entities).join() { // second stage - processing
+        b.life_time -= time;
+        if b.life_time < 0.0 {
+            arg.delete(e); // notice the entity is deleted asynchronously
+        }
+    }
+}
+```
+
+## Current state
+
+Amethyst has quickly adopted `specs` and later decided to not even hide it from the user, unambiguously implying that this is the only ECS they need. I switched [yasteroids](https://github.com/kvark/yasteroids) to `specs` as well and realized how nice it is to use. Many other projects choose `specs` as well, especially given the impressive [ECS benchmark](https://github.com/lschmierer/ecs_bench) results, making it incomparable with alternatives in terms of speed.
+
+Specs features "outer" parallelism, as in the whole component storages have to be locked. One can combine it with "inner" parallelism as well: `specs` gives you an iterator over components, so you can chunk them up and run through [rayon](https://github.com/nikomatsakis/rayon) to get more threads chewing through the data. It's not a theoretically optimal solution, but it hits a nice balance betwen the design simplicity, usability, and performance.
+
+One thing bothering me was the limited parallelism of the implementation. The idea @amaranth proposed to address it was called "ticketed locks". It was simple - instead of waiting for a lock right away, we could get a ticket, and then wait outside of the planner thread. That would allow more systems to run in parallel:
+
+  1. system starts: `(&A, &mut B)`
+  2. system is blocked: `(&B)`
+  3. system now can start too: `(&A, &mut C)`
+
+Implementing the ticketed locks though appeared to be non-trivial. @amaranth [Queued RwLock](https://github.com/amaranth/queuedrwlock) didn't look efficient for me, since it failed to provide concurrent read access. So I had to create [my own](https://github.com/kvark/ticketed_lock). It was a challenging task, and the internals are not obvious, but the API surface is rather tiny.
+
+The best thing about integrating ticketed locks into `specs` is that most systems don't even need to be updated. All the logic is done in the glue between 2 stages of a system:
+
+```rust
+fn fetch(&self, f: F) {
+    ...
+    let u = f(&self.world); // execute the system-provided `fetch` code. Now it gets the tickets from the `World` instead of the lock guards, so it returns almost instanteniously.
+    pulse.pulse(); // signal the planner thread to continue running, scheduling the next systems to run
+    u.pass() // and now actually wait for the locks to be acquired, before returning the control to the system
+}
+```
+
+## The future
+
+We are still going to polish the rough corners and bikeshed the names of `specs`, but the architecture is essentially complete. Specs is fast, parallel, and convenient. It's yet to meet a project that unleashes its full power. As a side effect, the implementation grew above and beyond my initial design, making it less easy to experiment with new ideas on it. I take it as a sign maturity :)
+
+The story of ECS in Rust does not end on `specs`, however. A new paradigm emerged, called a Component Graph System, that teases with better flexibility and compact design/implementation. It calls to experiment with future-based task graphs, ad-hoc parallelization, and complex integration with engine/rendering systems. There is a lot to talk about and explore, but that should be a topic of another post.
