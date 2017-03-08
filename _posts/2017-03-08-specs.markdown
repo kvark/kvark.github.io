@@ -49,9 +49,9 @@ I was thinking about this tentatively over some time, until a [discussion on Ame
 
 Another important key stone was the realization that a storage can just be wrapped into `RwLock` in order for multiple systems to use it for processing. The world could just store a map of type -> storage for access by the systems. The implementation had a few quirks, but the design puzzle pieces started to fit together nicely...
 
-Locking the storages in random order posed a deadlock hazard, so I figured, at least for the short term, that the locking step should be sequential. That was quite a restricting factor in achieving the true parallelism, but we still got some! And by "we" I mean me and @cherratt, who joined early and did a number of major improvements, including [pulse](https://github.com/slide-rs/pulse)-based signaling, efficient bit sets, and the "join" syntax of selecting the components for system to process.
+Locking the storages in random order posed a deadlock hazard, so I figured, at least for the short term, that the locking step should be sequential. That was quite a restricting factor in achieving the true parallelism, but we still got some! And by "we" I mean me and @cherratt, who joined early and did a number of major improvements, including [pulse](https://github.com/slide-rs/pulse)-based signaling, efficient bit sets, and the "join" syntax of selecting the components for a system to process.
 
-In April 2016 [specs](https://github.com/slide-rs/specs) was born. It quickly gained traction and praise of the community. So quickly that it made me feel sad about [gfx-rs](https://github.com/gfx-rs/gfx), which took orders of magnitude more effort and not received nearly as much approval. In `specs`, your system has 2 stages of execution - component fetches and processing:
+In April 2016 [specs](https://github.com/slide-rs/specs) was born. It quickly gained traction and praise of the community. So quickly that it made me feel sad about [gfx-rs](https://github.com/gfx-rs/gfx), which took orders of magnitude more effort and received not nearly as much approval. In `specs`, your system has 2 stages of execution - component fetches and processing:
 
 ```rust
 fn run(&self, arg: specs::RunArg, time: Delta) { // that's how a custom system processing is implemented
@@ -71,29 +71,36 @@ fn run(&self, arg: specs::RunArg, time: Delta) { // that's how a custom system p
 
 Amethyst has quickly adopted `specs` and later decided to not even hide it from the user, unambiguously implying that this is the only ECS they need. I switched [yasteroids](https://github.com/kvark/yasteroids) to `specs` as well and realized how nice it is to use. Many other projects choose `specs` as well, especially given the impressive [ECS benchmark](https://github.com/lschmierer/ecs_bench) results, making it incomparable with alternatives in terms of speed.
 
-Specs features "outer" parallelism, as in the whole component storages have to be locked. One can combine it with "inner" parallelism as well: `specs` gives you an iterator over components, so you can chunk them up and run through [rayon](https://github.com/nikomatsakis/rayon) to get more threads chewing through the data. It's not a theoretically optimal solution, but it hits a nice balance betwen the design simplicity, usability, and performance.
+Specs features "outer" parallelism, as in the whole component storages have to be locked. One can combine it with "inner" parallelism as well: `specs` gives you an iterator over components, so you can chunk them up and run through [rayon](https://github.com/nikomatsakis/rayon) to get more threads chewing through the data. It's not a theoretically optimal solution, but it hits a nice balance between the design simplicity, usability, and performance.
 
 One thing bothering me was the limited parallelism of the implementation. The idea @amaranth proposed to address it was called "ticketed locks". It was simple - instead of waiting for a lock right away, we could get a ticket, and then wait outside of the planner thread. That would allow more systems to run in parallel:
 
-  1. system starts: `(&A, &mut B)`
-  2. system is blocked: `(&B)`
-  3. system now can start too: `(&A, &mut C)`
+  1. System 1 wants components `&A` and `&mut B`, starts processing those components.
+  2. System 2 wants component `&B`, but System 1 is already accessing `B` mutably, so it is blocked.
+  3. System 3 wants components `&A` and `&mut C`, can also start because System 1 only have immutable access to A.
 
-Implementing the ticketed locks though appeared to be non-trivial. @amaranth [Queued RwLock](https://github.com/amaranth/queuedrwlock) didn't look efficient for me, since it failed to provide concurrent read access. So I had to create [my own](https://github.com/kvark/ticketed_lock). It was a challenging task, and the internals are not obvious, but the API surface is rather tiny.
+Implementing the ticketed locks though appeared to be non-trivial. @amaranth [queued RwLock](https://github.com/amaranth/queuedrwlock) didn't look efficient to me, since it failed to provide concurrent read access. So I had to create [my own](https://github.com/kvark/ticketed_lock). It was a challenging task, and the internals are not obvious, but the API surface is rather tiny.
 
 The best thing about integrating ticketed locks into `specs` is that most systems don't even need to be updated. All the logic is done in the glue between 2 stages of a system:
 
 ```rust
 fn fetch(&self, f: F) {
     ...
-    let u = f(&self.world); // execute the system-provided `fetch` code. Now it gets the tickets from the `World` instead of the lock guards, so it returns almost instanteniously.
-    pulse.pulse(); // signal the planner thread to continue running, scheduling the next systems to run
-    u.pass() // and now actually wait for the locks to be acquired, before returning the control to the system
+    // Execute the system-provided `fetch` code.
+    // Now it gets the tickets from the `World` instead of the lock guards,
+    // so it returns almost instantaneously.
+    let u = f(&self.world);
+    // Signal the planner thread to continue running,
+    // scheduling the next systems to run.
+    pulse.pulse();
+    // And now actually wait for the locks to be acquired,
+    // before returning the control to the system.
+    u.pass()
 }
 ```
 
 ## The future
 
-We are still going to polish the rough corners and bikeshed the names of `specs`, but the architecture is essentially complete. Specs is fast, parallel, and convenient. It's yet to meet a project that unleashes its full power. As a side effect, the implementation grew above and beyond my initial design, making it less easy to experiment with new ideas on it. I take it as a sign maturity :)
+We are still going to polish the rough corners and bikeshed the names in `specs` API, but the architecture is essentially complete. Specs is fast, parallel, and convenient. It's yet to meet a project that unleashes its full power. As a side effect, the implementation grew above and beyond my initial design, making it less easy to experiment with new ideas on it. I take it as a sign maturity :)
 
-The story of ECS in Rust does not end on `specs`, however. A new paradigm emerged, called a Component Graph System, that teases with better flexibility and compact design/implementation. It calls to experiment with future-based task graphs, ad-hoc parallelization, and complex integration with engine/rendering systems. There is a lot to talk about and explore, but that should be a topic of another post.
+The story of ECS in Rust does not end with `specs`, however. A new paradigm emerged, called a Component Graph System, that teases better flexibility and compact design/implementation. It calls us to experiment with future-based task graphs, ad-hoc parallelization, and complex integration with engine/rendering systems. There is a lot to talk about and explore, but that should be a topic of another post.
