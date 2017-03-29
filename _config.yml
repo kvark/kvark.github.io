@@ -15,6 +15,9 @@ url: "http://kvark.github.io" # the base hostname & protocol for your site
 #twitter_username: xxx
 github_username:  kvark
 
+gems:
+  - jekyll-feed
+
 # Build settings
 markdown: kramdown
 highlighter: rouge
