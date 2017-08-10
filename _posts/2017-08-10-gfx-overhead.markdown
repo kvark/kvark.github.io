@@ -12,11 +12,11 @@ One of the design goals for the portability API is to keep any overhead (when tr
 When adding an indirection layer from inside a program, given a language with zero-cost abstractions like C++ or Rust, it is possible to have the layer completely optimized away. However, the library will be provided as a static/dynamic binary, which would prevent the linker to inline the calls. That means doubling the cost of a function invocation (as opposed to execution) compared to a native API.
 
 Solutions:
-  1. whole program optimization
-  2. pure header library
-    - locks into using C/C++
-    - inconvenient
-    - long compile times
+* whole program optimization
+* pure header library
+  * locks into using C/C++
+  * inconvenient
+  * long compile times
 
 ## Native API differences
 
@@ -27,8 +27,8 @@ For example, Vulkan allows command buffers to be re-used, and so does D3D12. In 
 When the user requests to use the command buffer again, Metal backend would have to re-encode the native command buffer on the spot, which means a considerable delay to otherwise inexpensive operation of submitting a command buffer for execution.
 
 Solutions:
-  1. more granularity of device capabilities
-  2. pressure other platforms to add native support for missing features
+* more granularity of device capabilities
+* pressure other platforms to add native support for missing features
 
 ## Skewed idiomaticity
 
@@ -41,10 +41,10 @@ No other API has sub-passes. It is straightforward to emulate them by treating e
 When the user writes for Vulkan exclusively, they can have a firm believe that the driver optimizes the sub-passes (e.g. by reordering the work) for the non-tiled hardware. When Vulkan translates to D3D12 and Metal, there is no such luxury.
 
 Solutions:
-  1. device feature
-    - either a soft one, serving as a hint that sub-passes are efficient
-    - or a hard one, for allowing the use of multiple sub-passes in general
-  2. pray that other native APIs will catch up one day
+* device feature
+  * either a soft one, serving as a hint that sub-passes are efficient
+  * or a hard one, for allowing the use of multiple sub-passes in general
+* pray that other native APIs will catch up one day
 
 ## Conclusion
 
