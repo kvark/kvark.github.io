@@ -119,7 +119,7 @@ This is what the render backend state looks like at this level:
 
 ### Level 3: render task tree and gpu cache
 
-This level is where things can go wrong, and these are most difficult to track down, especially when external blobs and textures are involved. Structures here are most diverse and complex. Making the RON dumps less readable to human eyes. For example, here is what a batch looks like:
+This level is where things can go wrong, and these are most difficult to track down, especially when external blobs and textures are involved. Structures here are most diverse and complex, making the RON dumps less readable to human eyes. For example, here is what a batch looks like:
 ```yaml
     key: (
         kind: Transformable(AxisAligned, BorderCorner),
@@ -173,7 +173,7 @@ TL;DR: capturing allows us to slice the full WebRender pipeline state at particu
 It is made possible by the Rust power (and Servo in particular) of serializing all the things in the world with a simple attribute on top of a type:
 
 > Searching 89 files for "#[cfg_attr(feature = "capture", derive(Deserialize, Serialize)]"
-> ...
+
 > 104 matches across 23 files
 
 RON, on the other hand, proves to be useful at representing these vast amounts of Rust types. I hope to see it applied in more projects in the future.
