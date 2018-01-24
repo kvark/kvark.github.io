@@ -34,7 +34,7 @@ The new capture infrastructure was designed to allow us to inspect and "freeze" 
 
 This level should really be zero, if not for markdown forcing 1-based indexing. Technically, WebRender hasn't done anything with the data yet at this point, so the user is only themselves to blame :)
 
-WebRender has recording functionality that writes out a continuous stream of commands, conceptually sitting somewhere half-way to the next level. It can be enabled programatically via `RendererOptions`, or by enabling `ENABLE_WR_RECORDING` environmental variable when running Firefox. Recording produces a binary blob, which one can then attempt to replay with our `wrench` tool, and even save out the individual frames as YAML/RON/JSON.
+WebRender has recording functionality that writes out a continuous stream of commands, conceptually sitting somewhere half-way to the next level. It can be enabled programatically via `RendererOptions`, or by enabling `ENABLE_WR_RECORDING` environment variable when running Firefox. Recording produces a binary blob, which one can then attempt to replay with our `wrench` tool, and even save out the individual frames as YAML/RON/JSON.
 
 The exact experience of using this workflow may vary. I haven't gotten much luck tracing down graphics issues with help of recording, expressing my frustration in [an issue](https://github.com/servo/webrender/issues/2231). In particular, the ability to save/load YAML frames is frequently broken because the translation isn't done through [Serde](https://serde.rs).
 
@@ -43,7 +43,7 @@ The exact experience of using this workflow may vary. I haven't gotten much luck
 This is where capturing starts showing off. User can issue `RenderApi::save_capture(path, CaptureBits::SCENE)` call to trigger a dump to disc (at the specified folder path) of all the scene data and resource templates. Serialization of internal structs is done through Serde and uses [RON](https://github.com/ron-rs/ron) format by default. All the external images and blobs are getting read and dumped to raw files.
 
 This is what the render backend state looks like at this level:
-```yaml
+```rust
     default_device_pixel_ratio: 1,
     enable_render_on_scroll: false,
     frame_config: (
@@ -120,7 +120,7 @@ This is what the render backend state looks like at this level:
 ### Level 3: render task tree and gpu cache
 
 This level is where things can go wrong, and these are most difficult to track down, especially when external blobs and textures are involved. Structures here are most diverse and complex, making the RON dumps less readable to human eyes. For example, here is what a batch looks like:
-```yaml
+```rust
     key: (
         kind: Transformable(AxisAligned, BorderCorner),
         blend_mode: PremultipliedAlpha,
