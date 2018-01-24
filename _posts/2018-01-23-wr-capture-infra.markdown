@@ -10,7 +10,7 @@ For over a year now, I've been hacking on [WebRender](https://github.com/servo/w
 
 ## WebRender pipeline
 
-The way of input items to the screen goes through a series of steps, or levels. Each following level gets conceptually closer to the GPU, and the end result is a sequence of OpenGL commands:
+The way input data reaches the screen crosses a number of steps, or levels. Each following level gets conceptually closer to the GPU, and the end result is a sequence of OpenGL commands:
 
   1. On the user side, there is some representation of the workloads that gets transcribed into calls to `DisplayListBuilder` methods. The result, in a shape of serialized DLs (`BuiltDisplayList`, or "display lists") is sent to RB (`RenderBackend`).
   2. On the RB side, there are scenes (`Scene`) and resources (`ImageResource`, `FontTemplate`, `FontInstance`, etc). The main task of RB is to build those scenes into tiling frames and cull everything that can be culled. Scene building involves computing all the transforms and bounds of the clip-scroll tree, populating GPU data for instances, batching and re-ordering draw calls, etc.
@@ -24,7 +24,7 @@ The way of input items to the screen goes through a series of steps, or levels. 
 > Who you gonna call?..
 > W-R-Capture!
 
-Rust eliminates a fair share of most annoying and dangerous issues related to memory and low-level resource management. The strong type system helps us being confident about jumping between coordinate systems, handling large enumerations, and generally enforcing the logic invariants if the internal API bits. However, he higher level logical errors are still possible, and happen all the time. Once we raise above the expressiveness capability of Rust, we only have our common sense to rely on. And of course, powerful debugging tools!
+Rust eliminates a fair share of most annoying and dangerous issues related to memory and low-level resource management. The strong type system helps us being confident about jumping between coordinate systems, handling large enumerations, and generally enforcing the logic invariants if the internal API bits. However, the higher level logical errors are still possible, and happen all the time. Once we raise above the expressiveness capability of Rust, we only have our common sense to rely on. And of course, powerful debugging tools!
 
 A logic error may occur on one of the described levels, causing havoc and eventually manifesting in panics, flickering, and other glitches. Processing data from one level to the next is not a pure function: there is a lot of context getting mixed in the process, e.g. images from other tabs in the texture cache, fonts and glyphs, allocation of render task surfaces, free lists structure, and so on. Our capability to investigate and eliminate the issues depends on the ability to consistently reproduce the affected workloads on multiple levels.
 
@@ -143,7 +143,7 @@ This level is where things can go wrong, and these are most difficult to track d
 
 In order to trigger this sort of capture, user needs to include `CaptureBits::FRAME` flag (or just use `all()`) in the `save_capture` call. It takes longer because all the GPU side caches and targets need to be read back to main memory for saving.
 
-Capturing logic is very careful about preserving the semantics of items. External texture contents, for example, are loaded into textures and provided as external. The difference is that capturing now serves as manager for those, installing its own handlers for output frames and external images.
+Capturing logic is very careful about preserving the semantics of items. External texture contents, for example, are loaded into textures and still provided as external entities, even though the old owner is not a part of the capure. Capturing logic becomes the new owner by installing its own handlers for output frames and external images.
 
 ### Level 4: draw calls and pixels
 
@@ -156,7 +156,7 @@ This level is where we are no longer principally different from any other graphi
 
 ## Usage
 
-Captures can be replayed with `wrench load <path>` command. The loading will automatically figure out if it's a `SCENE` level capture of a `FRAME` level. In the latter case, no scene is going to be re-build, and Wrench will just show directly what is being captured, freezing the nasty flickering bugs and glitches in place for careful investigation.
+Wrench serves a thin player for captured content. Captures can be replayed with `wrench load <path>` command. The loading will automatically figure out if it's a `SCENE` level capture (in which case it will take a few seconds) or a `FRAME` level (taking whole 5-10 seconds). In the latter case, no scene is going to be re-build, and Wrench will just show directly what is being captured, freezing the nasty flickering bugs and glitches in place for careful investigation.
 
 Captured RON files are fully readable and editable by the user. When linking to WebRender directly, one can enable "png" feature to get the image contents saved as PNGs, where applicable, for cleaner inspection.
 
