@@ -15,6 +15,7 @@ I was born in USSR, now live in Canada, and work at Mozilla on some cool things 
 - "WebRender on Vulkan" at Mozilla All Hands (Whistler), [slides](https://github.com/kvark/slides/raw/d3d9009aaefa98f63fa3c63b35c847c87b062d33/WebRenderOnVulkan_WhistlerAllHands.pdf), 2019
 - [Portable graphics abstraction in Rust](https://archive.fosdem.org/2018/schedule/event/rust_vulkan_gfx_rs/) at Fosdem, 2018
 - "Firefox on gfx-rs" at Mozilla All Hands (Orlando), [slides](https://github.com/kvark/slides/raw/d3d9009aaefa98f63fa3c63b35c847c87b062d33/FirefoxOnGFX_OrlandoAllHands.pdf), 2018
+- "Surveying WebGL Developers" at Mozilla All Hands (San Francisco), [slides](https://github.com/kvark/slides/raw/ab961cb7c379530af5a23bc2652d2bf0f4c8e637/SurveyingWebGLDevelopers_SanFranAllHands.pdf), 2018
 - [Prototyping with Three-rs](https://www.youtube.com/watch?v=clUfrpv-568) at Rust Toronto (starts at 1:27), [slides](https://github.com/kvark/slides/raw/d3d9009aaefa98f63fa3c63b35c847c87b062d33/ThreeRS_RustTorontoMeetup.pdf), 2017 
 - [Entity Component Systems in Rust](https://www.youtube.com/watch?v=7WXE-2LRrXQ) at Rust Toronto (starts at 0:0), [slides](https://github.com/kvark/slides/raw/d3d9009aaefa98f63fa3c63b35c847c87b062d33/ECS_WithRust_RustTorontoMeetup.pdf), 2017
 - "Modern 3D API for the Web" at Mozilla All Hands (Hawaii), [slides](https://github.com/kvark/slides/raw/d3d9009aaefa98f63fa3c63b35c847c87b062d33/WebMetal_HawaiiAllHands.pdf)
@@ -24,6 +25,11 @@ I was born in USSR, now live in Canada, and work at Mozilla on some cool things 
 All the slides can also be found at https://github.com/kvark/slides, including some of the presentations that never happened.
 
 ## Publications
+
+- [A Taste of WebGPU in Firefox](https://hacks.mozilla.org/2020/04/experimental-webgpu-in-firefox/) in Mozilla Hacks blog, 2020
+- "Layered Textures Rendering Pipeline" and "Hierarchical Depth-Culling and Bounding Box Management on the GPU" in [OpenGL Insights](https://www.routledge.com/OpenGL-Insights/Cozzi-Riccio/p/book/9781439893760?utm_source=crcpress.com), 2012
+- "Quaternion-based rendering pipeline" in [GPU Pro 3](https://www.routledge.com/GPU-PRO-3-Advanced-Rendering-Techniques/Engel/p/book/9781439887820?utm_source=crcpress.com) (paper), 2012
+- [Real-Time Dynamic Fur on the GPU](https://www.gamedev.net/tutorials/programming/graphics/real-time-dynamic-fur-on-the-gpu-r2774/) in GameDev blog, [video](https://www.youtube.com/watch?v=xM2_9X-QvfQ), 2010
 
 ## Other blogs
 
