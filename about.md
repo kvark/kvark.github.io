@@ -16,7 +16,7 @@ I was born in USSR, now live in Canada, and work at Mozilla on some cool things 
 - [Portable graphics abstraction in Rust](https://archive.fosdem.org/2018/schedule/event/rust_vulkan_gfx_rs/) at Fosdem, 2018
 - "Firefox on gfx-rs" at Mozilla All Hands (Orlando), [slides](https://github.com/kvark/slides/raw/d3d9009aaefa98f63fa3c63b35c847c87b062d33/FirefoxOnGFX_OrlandoAllHands.pdf), 2018
 - "Surveying WebGL Developers" at Mozilla All Hands (San Francisco), [slides](https://github.com/kvark/slides/raw/ab961cb7c379530af5a23bc2652d2bf0f4c8e637/SurveyingWebGLDevelopers_SanFranAllHands.pdf), 2018
-- [Prototyping with Three-rs](https://www.youtube.com/watch?v=clUfrpv-568) at Rust Toronto (starts at 1:27), [slides](https://github.com/kvark/slides/raw/d3d9009aaefa98f63fa3c63b35c847c87b062d33/ThreeRS_RustTorontoMeetup.pdf), 2017 
+- [Prototyping with Three-rs](https://www.youtube.com/watch?v=ciUfrpv-568) at Rust Toronto (starts at 1:27), [slides](https://github.com/kvark/slides/raw/d3d9009aaefa98f63fa3c63b35c847c87b062d33/ThreeRS_RustTorontoMeetup.pdf), 2017 
 - [Entity Component Systems in Rust](https://www.youtube.com/watch?v=7WXE-2LRrXQ) at Rust Toronto (starts at 0:0), [slides](https://github.com/kvark/slides/raw/d3d9009aaefa98f63fa3c63b35c847c87b062d33/ECS_WithRust_RustTorontoMeetup.pdf), 2017
 - "Modern 3D API for the Web" at Mozilla All Hands (Hawaii), [slides](https://github.com/kvark/slides/raw/d3d9009aaefa98f63fa3c63b35c847c87b062d33/WebMetal_HawaiiAllHands.pdf)
 - "High-level Rust libraries for graphics programming" at University of Toronto, [slides](https://github.com/kvark/slides/raw/d3d9009aaefa98f63fa3c63b35c847c87b062d33/GFX_HighLevel_RustTorontoMeetup.pdf), 2015
