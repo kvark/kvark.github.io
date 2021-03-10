@@ -26,6 +26,7 @@ All the slides can also be found at https://github.com/kvark/slides, including s
 
 ## Publications
 
+- [WebGPU progress in Gecko](https://mozillagfx.wordpress.com/2021/03/10/webgpu-progress/) in Firefox Graphics Team blog, 2021
 - [A Taste of WebGPU in Firefox](https://hacks.mozilla.org/2020/04/experimental-webgpu-in-firefox/) in Mozilla Hacks blog, 2020
 - "Layered Textures Rendering Pipeline" and "Hierarchical Depth-Culling and Bounding Box Management on the GPU" in [OpenGL Insights](https://www.routledge.com/OpenGL-Insights/Cozzi-Riccio/p/book/9781439893760?utm_source=crcpress.com), 2012
 - "Quaternion-based rendering pipeline" in [GPU Pro 3](https://www.routledge.com/GPU-PRO-3-Advanced-Rendering-Techniques/Engel/p/book/9781439887820?utm_source=crcpress.com) (paper), 2012
