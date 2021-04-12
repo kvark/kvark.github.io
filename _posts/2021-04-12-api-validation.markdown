@@ -18,23 +18,24 @@ i.e. "let's see what the validator thinks" (see [Metal maximum buffer size](http
 This is unfortunate for many reasons:
   1. There is no discovery mechanism for validation errors that are not in the documentation. They hit us by surprise.
   1. Validation errors don't provide the full context. For example, the maximum buffer size differs by hardware.
-  1. Validation code may be incomplete or buggy (see [VVL issues](https://github.com/KhronosGroup/Vulkan-ValidationLayers/issues)).
+  1. Validation code may be incomplete or buggy (see [validation layers issues](https://github.com/KhronosGroup/Vulkan-ValidationLayers/issues)).
 
-Unless you have connections to the teams writing the drivers, API specifications, or validation layers,
-consider yourself in a world of pain.
-Since Khronos produces standards and not software, the validation layers (or VVL for short) were developed by LunarG,
-contracted by Valve. Think about it: a separate organization contributes VVL for Khronos's standard.
-Developers at LunarG are equally likely to misinterpret the specification, they are technically users of.
-Unlike with D3D12, the GPU-assisted validation in Vulkan came more than 3 years after the specification release.
+Unless you have connections to the teams writing the drivers, API specifications,
+or validation layers (or VVL for short), consider yourself in a world of pain.
+Since Khronos produces standards and not software, the VVL were developed by LunarG,
+[contracted](https://en.wikipedia.org/wiki/LunarG) by Valve.
+Think about it: a separate organization contributes VVL for Khronos's standard.
+Developers at LunarG are equally likely to misinterpret the specification: they are technically users of, not the designers.
+Unlike D3D12, the [GPU-assisted validation](https://www.lunarg.com/wp-content/uploads/2019/02/GPU-Assisted-Validation_v3_02_22_19.pdf) in Vulkan came more than 3 years after the specification release.
 The whole thing feels more like a "welcome addition" than an integral part of the standard.
 
 ## Ideal standard
 
-Let's go back to the question of who is going to validate the validator.
+Let's go back to the question of "who is going to validate the validator".
 I believe the answer should be "nobody", because the validation is the sanest place
 where the exact API constraints can be defined.
 
-Why are we writing the tons and tons of "Valid Usage" rules in Vulkan specification (that are repeated for different entry points)?
+Why are we writing the tons of "Valid Usage" rules in Vulkan specification, which are repeated for different entry points?
 Why are we pretending that the specification itself, written in human language, can be the source of truth,
 given that we know how human communication can be ambiguous? We are guilty of this in WebGPU as well,
 writing "algorithms" in the spec with pseudo-code (like [this one](https://web.archive.org/web/20210315165356/https://gpuweb.github.io/gpuweb/#abstract-opdef-validating-gpusamplerdescriptor)).
@@ -63,6 +64,7 @@ So it's not a "formal" specification that is interpreted by humans, and can only
 Instead, it's actual machine code, that is checked by a machine, and also happens to be readable for humans.
 There is no ambiguity, the validation code becomes the source of truth for API expectations.
 It would be developed in the open and available to anybody, similar to [W3C validator](https://validator.w3.org/).
+Of course, having a reference implementation would be even better, but I'm afraid this is asking too much.
 
 And as an API user, I'd much rather read this validation code than
 interpret the pseudo-code we have in various specifications. And as an API editor, I'd much rather express
