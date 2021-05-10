@@ -5,6 +5,8 @@ date:   2021-05-01 11:11:11 -0500
 categories: spirv
 ---
 
+Disclaimer: this is a rant about SPIR-V specifically in the context of graphics (not general compute). Some of the weirdness of SPIR-V came around from the needs of [clspv](https://github.com/google/clspv) front-end, as pointed out by [JohnK](https://github.com/johnkslang).
+
 # History
 
 For WebGPU community group, the debate on whether or not we can adopt SPIR-V for the API needs was probably the most contentious of all, it was discussed for years. Me and a lot of other folks, especially from Google, were deeply convinced that SPIR-V is a great portable format. It's binary, well defined (in Khronos) by the very folks who make the hardware for running it, and there is a growing ecosystem around it. What can possibly go wrong?
@@ -54,7 +56,7 @@ Structs in SPIR-V appear to always be unbound on the right side. Each member has
 ### Storage classes
 
 They are simply confusing. What is "UniformConstant"? How is it different from "Uniform"? Storage buffers started off in this class, only to be assigned their own "StorageBuffer" class later on with an extension...
-Fortunately, David [explained](https://github.com/gpuweb/gpuweb/issues/1105#issuecomment-702837083) all the classes and suggested a nice scheme for WGSL. In this scheme, all the opaque things, such as samplers and textures, belonged to "Handle" class. I wish SPIR-V had that from the start.
+Fortunately, [DavidN](https://github.com/dneto0) [explained](https://github.com/gpuweb/gpuweb/issues/1105#issuecomment-702837083) all the classes and suggested a nice scheme for WGSL. In this scheme, all the opaque things, such as samplers and textures, belonged to "Handle" class. I wish SPIR-V had that from the start.
 
 ### Variables
 
@@ -100,7 +102,7 @@ SPIR-V doesn't completely erase the structure of the source shader: all the bran
 The talented [contributor](https://github.com/MatusT) of the CFG resolution logic in Naga eventually concluded:
 > you can’t really rely on the merge block as a point where two paths actually merge
 
-The actual logic of reconstructing the control flow (in a structured way, which our IR expects) becomes [rather messy](https://github.com/gfx-rs/naga/pull/688), full of sacred knowledge and handling of the edge cases. Hopefully, Matus publishes some details about this separately.
+The actual logic of reconstructing the control flow (in a structured way, which our IR expects) becomes [rather messy](https://github.com/gfx-rs/naga/pull/688), full of sacred knowledge and handling of the edge cases. Hopefully, MatusT publishes some details about this separately.
 
 ### Regions
 
