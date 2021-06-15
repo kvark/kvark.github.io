@@ -24,6 +24,11 @@ I was born in USSR, now live in Canada, and work at Mozilla on some cool things 
 
 All the slides can also be found at https://github.com/kvark/slides, including some of the presentations that never happened.
 
+## Smaller talks
+
+- [wgpu re-organization](https://www.youtube.com/watch?v=Wuwxh958P6I&t=3309s) at Rust Gamedev Meetup, [slides](https://github.com/kvark/slides/blob/799fc6cdfe3d040d06b6cb271518d217db42e09b/md/WgpuReorganization.md), 2021
+- [Naga in gfx-portability](https://youtu.be/6drrul3p_hU?t=2069) at Rust Gamedev Meetup, [slides](https://github.com/kvark/slides/raw/799fc6cdfe3d040d06b6cb271518d217db42e09b/Rust/NagaInGfxPortability_RustGamedevMeetup.pdf), 2021
+
 ## Publications
 
 - [WebGPU progress in Gecko](https://mozillagfx.wordpress.com/2021/03/10/webgpu-progress/) in Firefox Graphics Team blog, 2021
