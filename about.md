@@ -9,6 +9,7 @@ I was born in USSR, now live in Canada, and work at Mozilla on some cool things 
 
 ## Talks
 
+- [gfx-rs: lessons learned](https://vimeo.com/621152607) at Rust Graphics Meetup, [slides](https://github.com/kvark/slides/blob/4a0c110e0efb3a982eaa3de0f1e4ba04d0be56d8/md/GfxLessonsLearned.md), Oct 2021
 - [Building WebGPU with Rust](https://fosdem.org/2020/schedule/event/rust_webgpu/) at Fosdem, 2020
 - "Introduction to WebGPU" at Mozilla All Hands (Berlin), [slides](https://github.com/kvark/slides/raw/d3d9009aaefa98f63fa3c63b35c847c87b062d33/IntroductionToWebGPU_BerlinAllHands.pdf), 2020
 - [Capture infrastructure with Serde and RON](https://www.youtube.com/watch?v=F1AquroPfcI) at Rust Toronto (starts at 0:0), [slides](https://github.com/kvark/slides/raw/d3d9009aaefa98f63fa3c63b35c847c87b062d33/WR_Capture_Infrastructure_RustTorontoMeetup.pdf), 2019
@@ -26,6 +27,7 @@ All the slides can also be found at https://github.com/kvark/slides, including s
 
 ## Smaller talks
 
+- [wgpu-hal introduction](https://www.youtube.com/watch?v=0cefGQyZXH4&t=2508s) at Rust Gamedev Meetup, [slides](https://github.com/kvark/slides/blob/4a0c110e0efb3a982eaa3de0f1e4ba04d0be56d8/md/WgpuHalOverview.md), 2021
 - [wgpu re-organization](https://www.youtube.com/watch?v=Wuwxh958P6I&t=3309s) at Rust Gamedev Meetup, [slides](https://github.com/kvark/slides/blob/799fc6cdfe3d040d06b6cb271518d217db42e09b/md/WgpuReorganization.md), 2021
 - [Naga in gfx-portability](https://youtu.be/6drrul3p_hU?t=2069) at Rust Gamedev Meetup, [slides](https://github.com/kvark/slides/raw/799fc6cdfe3d040d06b6cb271518d217db42e09b/Rust/NagaInGfxPortability_RustGamedevMeetup.pdf), 2021
 
