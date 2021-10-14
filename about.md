@@ -9,6 +9,7 @@ I was born in USSR, now live in Canada, and work at Mozilla on some cool things 
 
 ## Talks
 
+- [Processing Shaders with Rust](https://vimeo.com/632377558) at Rust Los Angeles Meetup, [slides](https://github.com/kvark/slides/blob/73d1b22adf06bb463a1fbe5a4d7bc4edb906bb76/md/ProcessingShaders.md), Oct 2021
 - [gfx-rs: lessons learned](https://vimeo.com/621152607) at Rust Graphics Meetup, [slides](https://github.com/kvark/slides/blob/4a0c110e0efb3a982eaa3de0f1e4ba04d0be56d8/md/GfxLessonsLearned.md), Oct 2021
 - [Building WebGPU with Rust](https://fosdem.org/2020/schedule/event/rust_webgpu/) at Fosdem, 2020
 - "Introduction to WebGPU" at Mozilla All Hands (Berlin), [slides](https://github.com/kvark/slides/raw/d3d9009aaefa98f63fa3c63b35c847c87b062d33/IntroductionToWebGPU_BerlinAllHands.pdf), 2020
