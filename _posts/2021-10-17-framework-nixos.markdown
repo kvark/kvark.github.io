@@ -99,6 +99,8 @@ There is an issue with touchpad on KDE: setting two-finger tap as right click (l
 
 ## Conclusion
 
+![final photo](/resource/new-laptop.jpg)
+
 Overall, I find the laptop sufficiently usable and portable, and quite fast.
 It's definitely better than either of *X1* or *T495s*, and mostly better than *MBP*.
 
