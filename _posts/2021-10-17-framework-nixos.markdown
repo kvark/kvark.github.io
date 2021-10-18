@@ -95,7 +95,9 @@ Apparently, KDE Plasma5 does the scaling right. Setting it to 150% gives pleasur
 
 #### Input
 
-There is an issue with touchpad on KDE: setting two-finger tap as right click (like in macOS) is currently malfunctioning, see (kde#408116)[https://bugs.kde.org/show_bug.cgi?id=408116]. It's quite annoying, but not NixOS fault.
+There is an issue with touchpad on KDE: setting two-finger tap as right click (like in macOS) is currently malfunctioning, see [kde#408116](https://bugs.kde.org/show_bug.cgi?id=408116). It's quite annoying, but not NixOS fault.
+
+There is no backlighting yet. Looking forward to a keyboard replacement that would get it, and maybe some full-sized up/down keys, in the future.
 
 ## Conclusion
 
@@ -108,3 +110,5 @@ Setting up NixOS on it is a bit rough, but once you get there, the system feels 
 I'm starting to feel productive now, and excited to fully migrate to it for development!
 
 Clearly, there are still issues, and the story is to be continued. Bluetooth doesn't work - see [kernel#213829](https://bugzilla.kernel.org/show_bug.cgi?id=213829). Power consumption can be better. I'm hoping this post will help others to get up to speed. Please feel free to use the parts of [my config](https://github.com/kvark/dotfiles).
+
+*Discuss on [HackersNews](https://news.ycombinator.com/item?id=28899039).*
