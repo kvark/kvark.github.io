@@ -35,7 +35,7 @@ In addition, I have a personal **Thinkpad T495s**. It's a decent portable AMD 35
 
 ![framework package](/resource/framework-package.jpg) ![framework inside](/resource/framework-inside.jpg)
 
-Here comes the Framework DYI edition, delivered as a bag of parts that you need to assemble before using. Packaging is great, and there is a neat screwdriver to open all the locks. They took extra care about the process - it's impossible to lose any bolts, which happened to me with other laptops.
+Here comes the Framework DIY edition, delivered as a bag of parts that you need to assemble before using. Packaging is great, and there is a neat screwdriver to open all the locks. They took extra care about the process - it's impossible to lose any bolts, which happened to me with other laptops.
 
 The *body* seems solid and well thought through, even if not as sturdy as *MBP*'s aluminum. It's also a bit thicker, but slightly lighter. It stands on pads, and fan exhaust goes down. The fan itself can spin up when doing anything, but overall it's silent (although, not as good as *MBP*).
 
