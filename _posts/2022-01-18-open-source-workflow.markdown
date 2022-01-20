@@ -17,7 +17,7 @@ Let's start with an openly available git repository. We use Github for most thin
   - CHANGELOG file
   - (in Rust) include `Cargo.lock` if the project has important binary targets
 
-All the development happens in the default branch, let's call it trunk. We configure the repository to make it "protected" by requiring at least CI checks to pass on it. We also enable auto-merge and linear history. Auto-merge ensures that the merged code is CI-checked. Linear history allows us to bisect any regression later on. For this reason, it's also important to have each commit working.
+All the development happens in the default branch, let's call it trunk. We configure the repository to make it "protected" by requiring at least CI checks to pass on it. We also enable auto-merge, require linear history, and automatically delete head branches. Auto-merge ensures that the merged code is CI-checked. Linear history allows us to bisect any regression later on. For this reason, it's also important to have each commit working. Finally, deleting head branches saves you from doing it manually, and it's what we need at all times with temporary fix/feature branches.
 
 Smaller PRs are generally squashed. Larger can sometimes be rebased, if there is a trust in the author to do the proper checks on each commit. I wish Github had an option to do this for us, i.e. run CI on every commit when rebasing.
 
@@ -105,4 +105,4 @@ For an actively developed project releasing once in a few months (say, 3-4 relea
 This stuff I haven't figured out totally yet. Making something good and usable may end up with people happily using it without contributing back. Making something too rough will repel potential users. The [itch-to-scratch](https://en.wikipedia.org/wiki/The_Cathedral_and_the_Bazaar) model seems to work somewhat:
 > Every good work of software starts by scratching a developer's personal itch.
 
-We generally use Matrix rooms for communication. I've seen projects with very active community engagement, and others with strong BDFL but a weak community. One thing that I value most is doing quick reviews and providing detailed feedback.
+We generally use Matrix rooms for communication. I've seen projects with very active community engagement, and others with strong BDFL but a weak community. One thing that I value most is doing quick reviews and providing detailed feedback. That's most time consuming, distracting, but also most rewarding.
