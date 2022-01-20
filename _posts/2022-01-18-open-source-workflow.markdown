@@ -17,7 +17,7 @@ Let's start with an openly available git repository. We use Github for most thin
   - CHANGELOG file
   - (in Rust) include `Cargo.lock` if the project has important binary targets
 
-All the development happens in the master branch. We configure the repository to make it "protected" by requiring at least CI checks to pass on it. We also enable auto-merge and linear history. Auto-merge ensures that the merged code is CI-checked. Linear history allows us to bisect any regression later on. For this reason, it's also important to have each commit working.
+All the development happens in the default branch, let's call it trunk. We configure the repository to make it "protected" by requiring at least CI checks to pass on it. We also enable auto-merge and linear history. Auto-merge ensures that the merged code is CI-checked. Linear history allows us to bisect any regression later on. For this reason, it's also important to have each commit working.
 
 Smaller PRs are generally squashed. Larger can sometimes be rebased, if there is a trust in the author to do the proper checks on each commit. I wish Github had an option to do this for us, i.e. run CI on every commit when rebasing.
 
@@ -33,15 +33,15 @@ git remote add upstream https://github.com/<owner>/<project-name>
 Before writing a patch, set the stage ready on a temporary branch:
 ```bash
 cd <project_name>
-git checkout master
-git pull -r upstream master # this updates my local master to the upstream
+git checkout trunk
+git pull -r upstream trunk # this updates my local trunk to the upstream
 git checkout -b my-great-fix # branch out locally
 ```
 
-If you accidentally worked in master and committed something, you can fix this by renaming it and forking the master again:
+If you accidentally worked in trunk and committed something, you can fix this by renaming it and forking the trunk again:
 ```bash
 git branch -m my-great-fix
-git checkout HEAD^ -b master # in case of 1 extra commit, use HEAD^^ for 2, etc
+git checkout HEAD^ -b trunk # in case of 1 extra commit, use HEAD^^ for 2, etc
 git checkout my-great-fix # continue working on it
 ````
 
@@ -63,7 +63,7 @@ git rebase -i HEAD^ # for one commit
 
 We prefer the PRs to be as close to the tip as possible, so you may need to rebase if PR took a while to review:
 ```bash
-git pull -r upstream master
+git pull -r upstream trunk
 # resolve conflicts
 cargo test # preferably, for each commit
 git push -f origin HEAD
@@ -71,15 +71,15 @@ git push -f origin HEAD
 
 Oh, and generally reviews should provide the first wave of feedback within a day or two. Anything longer is a big concern for the health of the project.
 
-After the PR got merged we can either delete the fork:
+After the PR got merged we can either delete the branch:
 ```bash
-git checkout master
+git checkout trunk
 git branch -D my-great-fix
 ```
 Or continue with a different name:
 ```bash
 git branch -m another-thing
-git pull -r upstream master
+git pull -r upstream trunk
 ````
 
 ## Releases
@@ -92,9 +92,9 @@ General release procedure consists for the following steps:
   5. Test it thoroughly. Make a PR and see how CI likes it.
   6. Publish on Crates and merge the PR.
 
-For breaking changes, we create a new branch from master, e.g. `v0.10`, after the merge. For patches, we work off the branch being patched (and the PR goes against that branch), and [cherry-pick](https://github.com/gfx-rs/naga/pull/1663) the necessary changes from master. Some people insist on tagging each and every release, but I don't find it necessary. As long as you can see when crates versions were updated, and you followed this routine, it's clear what code was changed for each version (in addition to the changelog entries).
+For breaking changes, we create a new branch from trunk, e.g. `v0.10`, after the merge. For patches, we work off the branch being patched (and the PR goes against that branch), and [cherry-pick](https://github.com/gfx-rs/naga/pull/1663) the necessary changes from trunk. Some people insist on tagging each and every release, but I don't find it necessary. As long as you can see when crates versions were updated, and you followed this routine, it's clear what code was changed for each version (in addition to the changelog entries).
 
-Note: since the work is done in the branch, master doesn't get its patch version updated. The result is often that master package version is *behind* the release branch version. That may be confusing to some users, but I think it's totally fine. The version only matters for something that is either on crates, or used as a override for something on crates. You are never supposed to override a released version by master, because generally speaking master has some breaking changes in it.
+Note: since the work is done in the branch, trunk doesn't get its patch version updated. The result is often that trunk package version is *behind* the release branch version. That may be confusing to some users, but I think it's totally fine. The version only matters for something that is either on crates, or used as a override for something on crates. You are never supposed to override a released version by trunk, because generally speaking trunk has some breaking changes in it.
 
 Note: Rust's SemVer culture is different from the general SemVer in that the patch version in "0.x.patch" is required to be backwards compatible with other "0.x.y". So you can see a lot of "pre-1.0" crates, and [that's OK](https://github.com/kvark/mint/issues/31).
 
