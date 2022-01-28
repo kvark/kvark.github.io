@@ -104,6 +104,9 @@ The talented [contributor](https://github.com/MatusT) of the CFG resolution logi
 
 The actual logic of reconstructing the control flow (in a structured way, which our IR expects) becomes [rather messy](https://github.com/gfx-rs/naga/pull/688), full of sacred knowledge and handling of the edge cases. Hopefully, MatusT publishes some details about this separately.
 
+Edit: Jason Ekstrand from Intel also mentions this magic in the [article about NIR](https://www.jlekstrand.net/jason/blog/2022/01/in-defense-of-nir/):
+> The only thing that has been a challenge has been dealing with SPIR-V’s less than obvious structure rules and trying to make sure we properly structurize everything that’s legal.
+
 ### Regions
 
 When we are looking at a block in SPIR-V, and it introduces an SSA id, we may assume that the relevant section of HLSL, MSL, WGSL, or Naga's IR would be able to define this SSA id within the block. But that's not always the case.
