@@ -14,7 +14,7 @@ In other words, a bunch of nonsense. Enjoy!
 
 Imagine a civilization that discovers the Mandelbrot set picture at infinite detail, without any realization of the mechanism that produced it. It's mesmerized by the beauty and complexity of the set. It produces works of art, culture, and science, based on these images. It wants more: to be able to generate their own Mandelbrot-like sets. What does this civilization do?
 
-It creates a whole field of science for finding the relations between different parts of the set. Thousands of individuals measuring, comparing, reproducing simple subsets. Maybe even establishing the foundation of "fractal" as something that has versions of itself found at different scales. It manages to produce pictures similar to different parts of the Mandelbrot set. This ability kicks off a wave of incremental technological advancements that changes their society. Big corporations are formed about this tech, offer countless new products and services. But at the end of the day, how close would they get to actually discovering the equation?
+It creates a whole field of science for finding the relations between different parts of the set. Thousands of individuals measuring, comparing, reproducing simple subsets. Maybe even establishing the foundation of "fractal" as something that has versions of itself found at different scales. It manages to produce pictures similar to different parts of the Mandelbrot set. This ability kicks off a wave of incremental technological advancements that changes their society. Big corporations are formed around this tech, offer countless new products and services. But at the end of the day, how close would they get to actually discovering the equation?
 
 ## Neural Networks
 
