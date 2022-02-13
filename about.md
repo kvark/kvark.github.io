@@ -9,6 +9,7 @@ I was born in USSR, now live in Canada, and work at Mozilla on some cool things 
 
 ## Talks
 
+- "Wgpu challenges" [slides](https://github.com/kvark/slides/blob/b3cbeaa4704dd6090cf633e5b559390e744f6c1c/md/WgpuChallenges.md), Dec 2021
 - [Processing Shaders with Rust](https://vimeo.com/632377558) at Rust Los Angeles Meetup, [slides](https://github.com/kvark/slides/blob/73d1b22adf06bb463a1fbe5a4d7bc4edb906bb76/md/ProcessingShaders.md), Oct 2021
 - [gfx-rs: lessons learned](https://vimeo.com/621152607) at Rust Graphics Meetup, [slides](https://github.com/kvark/slides/blob/4a0c110e0efb3a982eaa3de0f1e4ba04d0be56d8/md/GfxLessonsLearned.md), Oct 2021
 - [Building WebGPU with Rust](https://fosdem.org/2020/schedule/event/rust_webgpu/) at Fosdem, 2020
@@ -28,6 +29,7 @@ All the slides can also be found at https://github.com/kvark/slides, including s
 
 ## Smaller talks
 
+- [Baryon](https://youtu.be/adt63Gqt6yA?t=1907) at Rust Gamedev Meetup, [slides](https://hackmd.io/@kvark/baryon/), 2022
 - [wgpu-hal introduction](https://www.youtube.com/watch?v=0cefGQyZXH4&t=2508s) at Rust Gamedev Meetup, [slides](https://github.com/kvark/slides/blob/4a0c110e0efb3a982eaa3de0f1e4ba04d0be56d8/md/WgpuHalOverview.md), 2021
 - [wgpu re-organization](https://www.youtube.com/watch?v=Wuwxh958P6I&t=3309s) at Rust Gamedev Meetup, [slides](https://github.com/kvark/slides/blob/799fc6cdfe3d040d06b6cb271518d217db42e09b/md/WgpuReorganization.md), 2021
 - [Naga in gfx-portability](https://youtu.be/6drrul3p_hU?t=2069) at Rust Gamedev Meetup, [slides](https://github.com/kvark/slides/raw/799fc6cdfe3d040d06b6cb271518d217db42e09b/Rust/NagaInGfxPortability_RustGamedevMeetup.pdf), 2021
