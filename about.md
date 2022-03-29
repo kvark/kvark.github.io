@@ -5,7 +5,8 @@ permalink: /about/
 ---
 
 Dzmitry Malyshau.
-I was born in USSR, now live in Canada, and work at Mozilla on some cool things ;)
+I was born in USSR, migrated to Canada, and now live in California.
+Like to think systematically and pretend I change the world ;)
 
 ## Talks
 
@@ -46,8 +47,9 @@ All the slides can also be found at https://github.com/kvark/slides, including s
 
 Be prepared for some non-conventional viewpoints here!
 
-  - [/ideas](https://kvark.github.io/ideas)
-  - [/vange-rs](https://kvark.github.io/vange-rs)
+  - [Ideas](https://kvark.github.io/ideas)
+  - [Rusty Vangers](https://kvark.github.io/vange-rs)
+  - [Synth Lab](https://t.me/synthlab)
 
 Older ones:
   - http://kvgate.blogspot.com/
