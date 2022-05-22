@@ -48,6 +48,7 @@ All the slides can also be found at https://github.com/kvark/slides, including s
 Be prepared for some non-conventional viewpoints here!
 
   - [Ideas](https://kvark.github.io/ideas)
+  - [Seeker](https://kvark.github.io/seeker)
   - [Rusty Vangers](https://kvark.github.io/vange-rs)
   - [Synth Lab](https://t.me/synthlab)
 
