@@ -30,6 +30,7 @@ All the slides can also be found at https://github.com/kvark/slides, including s
 
 ## Smaller talks
 
+- [Choir](https://youtu.be/drcX3dCS5MY?t=926) at Rust Gamedev Meetup, [slides](https://hackmd.io/@kvark/choir-talk/), 2022
 - [Baryon](https://youtu.be/adt63Gqt6yA?t=1907) at Rust Gamedev Meetup, [slides](https://hackmd.io/@kvark/baryon/), 2022
 - [wgpu-hal introduction](https://www.youtube.com/watch?v=0cefGQyZXH4&t=2508s) at Rust Gamedev Meetup, [slides](https://github.com/kvark/slides/blob/4a0c110e0efb3a982eaa3de0f1e4ba04d0be56d8/md/WgpuHalOverview.md), 2021
 - [wgpu re-organization](https://www.youtube.com/watch?v=Wuwxh958P6I&t=3309s) at Rust Gamedev Meetup, [slides](https://github.com/kvark/slides/blob/799fc6cdfe3d040d06b6cb271518d217db42e09b/md/WgpuReorganization.md), 2021
