@@ -10,6 +10,7 @@ Like to think systematically and pretend I change the world ;)
 
 ## Talks
 
+- [Blade - lean and mean graphics library](https://youtu.be/63dnzjw4azI?t=623) at Rust Graphics Meetup, [slides](https://hackmd.io/@kvark/blade), Jan 2023
 - "Wgpu challenges" [slides](https://github.com/kvark/slides/blob/b3cbeaa4704dd6090cf633e5b559390e744f6c1c/md/WgpuChallenges.md), Dec 2021
 - [Processing Shaders with Rust](https://vimeo.com/632377558) at Rust Los Angeles Meetup, [slides](https://github.com/kvark/slides/blob/73d1b22adf06bb463a1fbe5a4d7bc4edb906bb76/md/ProcessingShaders.md), Oct 2021
 - [gfx-rs: lessons learned](https://vimeo.com/621152607) at Rust Graphics Meetup, [slides](https://github.com/kvark/slides/blob/4a0c110e0efb3a982eaa3de0f1e4ba04d0be56d8/md/GfxLessonsLearned.md), Oct 2021
@@ -30,6 +31,8 @@ All the slides can also be found at https://github.com/kvark/slides, including s
 
 ## Smaller talks
 
+- [rs-voir](https://youtu.be/iSu-9yKsCRY?t=705) at Rust Gamedev Meetup, 2023
+- [Voxel tracing in Rusty Vangers](https://youtu.be/Ck2R0yqTLcU?t=1980) at Rust Gamedev Meetup, [blog post](https://vange.rs/2022/11/08/voxels.html), 2022 
 - [Choir](https://youtu.be/drcX3dCS5MY?t=926) at Rust Gamedev Meetup, [slides](https://hackmd.io/@kvark/choir-talk/), 2022
 - [Baryon](https://youtu.be/adt63Gqt6yA?t=1907) at Rust Gamedev Meetup, [slides](https://hackmd.io/@kvark/baryon/), 2022
 - [wgpu-hal introduction](https://www.youtube.com/watch?v=0cefGQyZXH4&t=2508s) at Rust Gamedev Meetup, [slides](https://github.com/kvark/slides/blob/4a0c110e0efb3a982eaa3de0f1e4ba04d0be56d8/md/WgpuHalOverview.md), 2021
