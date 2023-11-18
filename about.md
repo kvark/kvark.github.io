@@ -6,7 +6,7 @@ permalink: /about/
 
 Dzmitry Malyshau.
 I was born in USSR, migrated to Canada, and now live in California.
-Like to think systematically and pretend I change the world ;)
+I like to think about system dynamics and the future of our civilization.
 
 ## Talks
 
@@ -31,6 +31,7 @@ All the slides can also be found at https://github.com/kvark/slides, including s
 
 ## Smaller talks
 
+- [Blade scene editor](https://www.youtube.com/watch?v=Q5IUOvuXoC8) at Rust Gamedev Meetup, 2023
 - [Blade asset pipeline](https://youtu.be/1DiA3OYqvqU) at Rust Gamedev Meetup, [slides](https://hackmd.io/@kvark/blade-asset-pipeline#/), 2023
 - [rs-voir](https://youtu.be/iSu-9yKsCRY?t=705) at Rust Gamedev Meetup, 2023
 - [Voxel tracing in Rusty Vangers](https://youtu.be/Ck2R0yqTLcU?t=1980) at Rust Gamedev Meetup, [blog post](https://vange.rs/2022/11/08/voxels.html), 2022 
