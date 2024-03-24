@@ -61,3 +61,4 @@ Be prepared for some non-conventional viewpoints here!
 Older ones:
   - http://kvgate.blogspot.com/
   - http://claymore-dev.blogspot.com/
+  - [kvatom.com](https://web.archive.org/web/20150513163740/http://www.kvatom.com/) (archived)
