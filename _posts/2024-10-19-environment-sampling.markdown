@@ -133,6 +133,10 @@ return Sample(dir, pdf);
 
 The cost of this routine is proportional to `log(largest_dimension)`. We are doing a texel fetch at each step.
 
+#### Skip self-occlusion
+
+This method can be improved by checking the texel areas against the surface normal. At each step of the descent, we can check if any of the texels are completely below the positive hemisphere, and reset their weight to 0. We could also lower the weight of texels base on how much they intersect with the lower hemisphere. This trick would make it much more likely to choose a direction that's actually visible, at the cost of slightly more expensive descent.
+
 ### Binary search
 
 Another way to approach this is more general. Given a set of texels with their weight, we can compute the [prefix sums](https://en.wikipedia.org/wiki/Prefix_sum) for each. The weight of a texel is energy per solid angle. This precomutation can be done on CPU or GPU, it results in a large array of data:
@@ -169,7 +173,7 @@ One easy trick to deal with that problem is to continue generating new samples f
 ```rust
 var num_samples = 0.0;
 var estimate = vec3<f32>(0.0);
-while(true) {
+for (var i=0; i<5; i+=1) {
     let sm = generate_important_sample();
     num_samples += 1.0;
     // quickly check if it's self-occluded
@@ -180,6 +184,34 @@ while(true) {
     }
 }
 // now we can cast a real shadow ray
+```
+
+### Equal area mapping
+
+![equal area](/resource/env-map/a-The-octahedral-map-is-a-parametrization-of-the-sphere-onto-a-square-domain-of-n-n.png)
+
+There are ways to map a square to a sphere's surface with constant density.
+See practical implementation [by Clarberg](https://fileadmin.cs.lth.se/graphics/research/papers/2008/simdmapping/clarberg_simdmapping08_preprint.pdf) for details.
+
+This mapping can be combined with another method (such as the binary search):
+  1. pre-generate the 2D map (`energy_map`) where each texel contains the total energy of the area that the equal area maps this texel into.
+  2. pre-generate an acceleration structure (such as the prefix sum array) for this 2D map.
+  3. sample in 2 stages: first in precomputed energy map, then in the actual environment map.
+
+Pseudo-code of the sampling algorithm:
+```rust
+struct MetaSample {
+    vec2<i32> coords;
+    float pdf;
+}
+// generate an important sample of the precomputed energy map
+let equal_sample: MetaSample = pick_meta_sample(energy_map);
+// Each texel maps to equal area of the sphere, divide by this area.
+let pdf = equal_sample.pdf / constant_texel_area;
+// Random offset within the texel.
+let uv = (vec2<f32>(coords) + vec2<f32>(random(), random())) / vec2<f32>(textureSize(energy_map, 0));
+let dir = equal_area_projection(uv);
+return Sample(dir, pdf);
 ```
 
 ### Learn the map
@@ -193,7 +225,7 @@ I don't understand the magic behind learning these probabilities yet, but it's p
 
 ### Random within
 
-Once the texel of the environment map is chosen, it's not the end. We need to generate a light direction, and it can come from anywhere covered by this texel. In the redundant case of 1x1 map, this can be the whole image! Thus, it may be required to randomly pick a direction *within* the texel area, to produce unbiased samples. I first tried to naively change the UV by random values within the texel:
+If the sampling produced a texel coordinate of the environment map (as opposed to purely a direction), it's not the end. We need to generate a light direction, and it can come from anywhere covered by this texel. In the redundant case of 1x1 map, this can be the whole image! Thus, it may be required to randomly pick a direction *within* the texel area, to produce unbiased samples. I first tried to naively change the UV by random values within the texel:
 ```rust
 let uv = (vec2<f32>(texel_coords) + vec2<f32>(random(), random())) / vec2<f32>(texture_size);
 ```
@@ -210,4 +242,6 @@ Using this technique, my environment important sampling is unbiased for small im
 
 ## Afterword
 
-Environment sampling is hard! Every method has trade-offs, and practical solutions are barely good enough. It still shows up in profiles, and will probably remain the area of research for a while. In the meantime, hopefully, these pieces of code and descriptions help you to get things sampled :)
+Environment sampling is hard! Every method has trade-offs, and practical solutions are barely good enough. This is worsened by the fact that we often need to answer the question "how likely is this sample given our env sampling routine?" for the matter of Multiple Importance Sampling (MIS). Thus, it still shows up in profiles, and will probably remain the area of research for a while. In the meantime, hopefully, these pieces of code and descriptions help you to get things sampled :)
+
+Edit: added "Equal area mapping" and "Skip self-occlusion" thanks to [@ashpil](https://github.com/ashpil)'s feedback.
