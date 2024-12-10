@@ -10,6 +10,7 @@ I like to think about system dynamics and the future of our civilization.
 
 ## Talks
 
+- [In GPU we Rust](https://youtu.be/92mwRCXvMVk) at Rust in AI meetup, [slides](https://hackmd.io/@kvark/rust-gfx), Nov 2024
 - [Blade - lean and mean graphics library](https://youtu.be/63dnzjw4azI?t=623) at Rust Graphics Meetup, [slides](https://hackmd.io/@kvark/blade), Jan 2023
 - "Wgpu challenges" [slides](https://github.com/kvark/slides/blob/b3cbeaa4704dd6090cf633e5b559390e744f6c1c/md/WgpuChallenges.md), Dec 2021
 - [Processing Shaders with Rust](https://vimeo.com/632377558) at Rust Los Angeles Meetup, [slides](https://github.com/kvark/slides/blob/73d1b22adf06bb463a1fbe5a4d7bc4edb906bb76/md/ProcessingShaders.md), Oct 2021
