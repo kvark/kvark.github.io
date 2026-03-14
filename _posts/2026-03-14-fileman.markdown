@@ -1,0 +1,30 @@
+---
+layout: post
+title:  "File Manager"
+date:   2026-03-14 01:01:01 -0500
+categories: application
+---
+
+Time to dig up all of the projects and ideas that we didn't do mostly because of the lack of spare time. I've just released [fileman-0.1](https://github.com/kvark/fileman/releases/tag/v0.1) - the first version of my lean file manager.
+Ever since the time I worked with Windows and used a golden combo of [TotalCommander](https://www.ghisler.com/) + [IrfanView](https://www.irfanview.com/), I've been searching for anything even close in Unix/MacOS land. That feel of low latency, immediate response, and polish with robustness. No reason why we can't have good things, we just need to build them.
+
+![preview screenshot](https://github.com/kvark/fileman/blob/main/etc/snapshots/tests/preview.png?raw=true)
+
+What's so good about [Fileman](https://github.com/kvark/fileman):
+
+- It's built with [blade](https://github.com/kvark/blade) and [egui](https://www.egui.rs/). Works and looks the same on all major platforms, while rendering is fully GPU accelerated.
+- It's designed for speed and low latency. You can enter a multi-gigabyte archive, navigate it as a folder, preview image files on the way. No operation will be blocking, and we'll see the contents as soon as they asynchronously load.
+- Doesn't hog your battery. The refresh is only on content change, with a special UI indicator
+
+I'm trying to actively use the other panel for things like help, preview, or edits, which is different from the TotalCmd approach. This is to minimize popups and keep everything together. When in preview mode, we load a small chunk to display, while the rest of the file is loading asynchronously. There is syntax highlighting for popular text formats, and image previewing.
+
+Overall, it's a small program that is meant to help you navigate your drive easily. I'm sick of systems that ask "what do you want?" instead of giving you a menu. This tool puts you in control at all times.
+
+The tool is usable today. For future work, I'm looking at the following:
+- GLES support on Linux: extend platform support to older systems
+- tabs
+- faster image loading: load images at low-resolution instead of down-sampling
+- network drives
+- more polish
+
+If you find it useful, shoot me an email. Development with LLM is not hard. The hard part is knowing exactly what we need to build, so ideas are much welcomed ;)
