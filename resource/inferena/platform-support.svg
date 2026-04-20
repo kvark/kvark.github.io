@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 532" role="img" aria-label="ML framework support matrix across 7 hardware platforms and 9 frameworks, showing which frameworks run correctly, run slowly via CPU fallback, produce simplified or incorrect output, are unknown, or are not supported." font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
+  <title>ML framework support matrix by hardware</title>
+  <desc>Rows are hardware configurations, columns are ML frameworks. Green cells mean the framework runs correctly. Blue cells mean it runs but uses a CPU backend instead of GPU. Amber cells mean it runs but produces simplified or incorrect output. Medium gray cells mean the status is unknown. Light empty cells mean the framework does not support that hardware.</desc>
+
+  <!-- title -->
+  <text x="24" y="30" font-size="16" font-weight="500" fill="#111">What runs where</text>
+  <text x="24" y="52" font-size="13" fill="#6b635a">Framework support across consumer hardware, SmolLM2-135M inference.</text>
+
+  <!-- legend -->
+  <g transform="translate(24, 72)" font-size="12" fill="#6b635a">
+    <rect x="0" y="0" width="12" height="12" rx="2" fill="#0F6E56"/>
+    <text x="18" y="10">runs correctly</text>
+    <rect x="120" y="0" width="12" height="12" rx="2" fill="#6B9AC4"/>
+    <text x="138" y="10">slow (CPU fallback)</text>
+    <rect x="280" y="0" width="12" height="12" rx="2" fill="#EF9F27"/>
+    <text x="298" y="10">simplified / wrong</text>
+    <rect x="430" y="0" width="12" height="12" rx="2" fill="#a8a29e"/>
+    <text x="448" y="10">unknown</text>
+    <rect x="520" y="0" width="12" height="12" rx="2" fill="#f2efe8" stroke="#d1cec3" stroke-width="0.5"/>
+    <text x="538" y="10">not supported</text>
+  </g>
+
+  <!-- column headers -->
+  <g font-size="12" fill="#6b635a" text-anchor="middle">
+    <text x="242" y="126" font-weight="500">PyTorch</text>
+    <text x="306" y="126" font-weight="500">ONNX RT</text>
+    <text x="370" y="126" font-weight="500">JAX</text>
+    <text x="434" y="126" font-weight="500">GGML</text>
+    <text x="498" y="126" font-weight="500">MLX</text>
+    <text x="562" y="126" font-weight="500">Candle</text>
+    <text x="626" y="126" font-weight="500">Burn</text>
+    <text x="690" y="126" font-weight="500">Luminal</text>
+    <text x="762" y="126" font-weight="500">Meganeura</text>
+  </g>
+  <line x1="24" y1="138" x2="800" y2="138" stroke="#d1cec3" stroke-width="0.5"/>
+
+  <!-- row 1: RTX 5080 (Linux) -->
+  <text x="24" y="168" font-size="12" fill="#111" font-weight="500">RTX 5080 (Linux)</text>
+  <rect x="230" y="152" width="24" height="24" rx="4" fill="#0F6E56"/>          <!-- PyTorch: green -->
+  <rect x="294" y="152" width="24" height="24" rx="4" fill="#EF9F27"/>          <!-- ONNX RT: amber (strikethrough) -->
+  <rect x="358" y="152" width="24" height="24" rx="4" fill="#a8a29e"/>          <!-- JAX: unknown -->
+  <rect x="422" y="152" width="24" height="24" rx="4" fill="#0F6E56"/>          <!-- llama.cpp/GGML CUDA: green -->
+  <rect x="486" y="152" width="24" height="24" rx="4" fill="#f2efe8" stroke="#d1cec3" stroke-width="0.5"/> <!-- MLX: not supported -->
+  <rect x="550" y="152" width="24" height="24" rx="4" fill="#EF9F27"/>          <!-- Candle: amber (strikethrough) -->
+  <rect x="614" y="152" width="24" height="24" rx="4" fill="#EF9F27"/>          <!-- Burn: amber (strikethrough) -->
+  <rect x="678" y="152" width="24" height="24" rx="4" fill="#a8a29e"/>          <!-- Luminal: unknown -->
+  <rect x="750" y="152" width="24" height="24" rx="4" fill="#0F6E56"/>          <!-- Meganeura: green -->
+  <line x1="24" y1="190" x2="800" y2="190" stroke="#e5e0d4" stroke-width="0.5"/>
+
+  <!-- row 2: RTX 3050 (Windows) -->
+  <text x="24" y="220" font-size="12" fill="#111" font-weight="500">RTX 3050 (Windows)</text>
+  <rect x="230" y="204" width="24" height="24" rx="4" fill="#0F6E56"/>          <!-- PyTorch: green -->
+  <rect x="294" y="204" width="24" height="24" rx="4" fill="#EF9F27"/>          <!-- ONNX RT: amber (strikethrough) -->
+  <rect x="358" y="204" width="24" height="24" rx="4" fill="#f2efe8" stroke="#d1cec3" stroke-width="0.5"/> <!-- JAX: not supported (✗) -->
+  <rect x="422" y="204" width="24" height="24" rx="4" fill="#0F6E56"/>          <!-- llama.cpp/GGML CUDA: green -->
+  <rect x="486" y="204" width="24" height="24" rx="4" fill="#f2efe8" stroke="#d1cec3" stroke-width="0.5"/> <!-- MLX: not supported -->
+  <rect x="550" y="204" width="24" height="24" rx="4" fill="#f2efe8" stroke="#d1cec3" stroke-width="0.5"/> <!-- Candle: not supported (not listed) -->
+  <rect x="614" y="204" width="24" height="24" rx="4" fill="#EF9F27"/>          <!-- Burn: amber (strikethrough) -->
+  <rect x="678" y="204" width="24" height="24" rx="4" fill="#a8a29e"/>          <!-- Luminal: unknown -->
+  <rect x="750" y="204" width="24" height="24" rx="4" fill="#0F6E56"/>          <!-- Meganeura: green -->
+  <line x1="24" y1="242" x2="800" y2="242" stroke="#e5e0d4" stroke-width="0.5"/>
+
+  <!-- row 3: Radeon 890M (Linux) -->
+  <text x="24" y="272" font-size="12" fill="#111" font-weight="500">Radeon 890M (Linux)</text>
+  <rect x="230" y="256" width="24" height="24" rx="4" fill="#0F6E56"/>          <!-- PyTorch: green -->
+  <rect x="294" y="256" width="24" height="24" rx="4" fill="#f2efe8" stroke="#d1cec3" stroke-width="0.5"/> <!-- ONNX RT: not supported (✗) -->
+  <rect x="358" y="256" width="24" height="24" rx="4" fill="#a8a29e"/>          <!-- JAX: unknown -->
+  <rect x="422" y="256" width="24" height="24" rx="4" fill="#a8a29e"/>          <!-- llama.cpp: unknown -->
+  <rect x="486" y="256" width="24" height="24" rx="4" fill="#f2efe8" stroke="#d1cec3" stroke-width="0.5"/> <!-- MLX: not supported -->
+  <rect x="550" y="256" width="24" height="24" rx="4" fill="#f2efe8" stroke="#d1cec3" stroke-width="0.5"/> <!-- Candle: not supported (not listed) -->
+  <rect x="614" y="256" width="24" height="24" rx="4" fill="#EF9F27"/>          <!-- Burn: amber (strikethrough) -->
+  <rect x="678" y="256" width="24" height="24" rx="4" fill="#f2efe8" stroke="#d1cec3" stroke-width="0.5"/> <!-- Luminal: not supported -->
+  <rect x="750" y="256" width="24" height="24" rx="4" fill="#0F6E56"/>          <!-- Meganeura: green -->
+  <line x1="24" y1="294" x2="800" y2="294" stroke="#e5e0d4" stroke-width="0.5"/>
+
+  <!-- row 4: Apple M3 -->
+  <text x="24" y="324" font-size="12" fill="#111" font-weight="500">Apple M3</text>
+  <rect x="230" y="308" width="24" height="24" rx="4" fill="#0F6E56"/>          <!-- PyTorch: green (MPS) -->
+  <rect x="294" y="308" width="24" height="24" rx="4" fill="#f2efe8" stroke="#d1cec3" stroke-width="0.5"/> <!-- ONNX RT: not supported -->
+  <rect x="358" y="308" width="24" height="24" rx="4" fill="#EF9F27"/>          <!-- JAX: amber (strikethrough) -->
+  <rect x="422" y="308" width="24" height="24" rx="4" fill="#0F6E56"/>          <!-- llama.cpp/GGML Metal: green -->
+  <rect x="486" y="308" width="24" height="24" rx="4" fill="#0F6E56"/>          <!-- MLX: green -->
+  <rect x="550" y="308" width="24" height="24" rx="4" fill="#EF9F27"/>          <!-- Candle: amber (strikethrough) -->
+  <rect x="614" y="308" width="24" height="24" rx="4" fill="#EF9F27"/>          <!-- Burn: amber (strikethrough) -->
+  <rect x="678" y="308" width="24" height="24" rx="4" fill="#f2efe8" stroke="#d1cec3" stroke-width="0.5"/> <!-- Luminal: not supported (✗) -->
+  <rect x="750" y="308" width="24" height="24" rx="4" fill="#0F6E56"/>          <!-- Meganeura: green -->
+  <line x1="24" y1="346" x2="800" y2="346" stroke="#e5e0d4" stroke-width="0.5"/>
+
+  <!-- row 5: Intel iGPU (RPL-U) -->
+  <text x="24" y="376" font-size="12" fill="#111" font-weight="500">Intel iGPU (RPL-U)</text>
+  <rect x="230" y="360" width="24" height="24" rx="4" fill="#6B9AC4"/>          <!-- PyTorch: slow (CPU) -->
+  <rect x="294" y="360" width="24" height="24" rx="4" fill="#EF9F27"/>          <!-- ONNX RT: amber (strikethrough + CPU) -->
+  <rect x="358" y="360" width="24" height="24" rx="4" fill="#EF9F27"/>          <!-- JAX: amber (strikethrough + CPU) -->
+  <rect x="422" y="360" width="24" height="24" rx="4" fill="#a8a29e"/>          <!-- llama.cpp: unknown -->
+  <rect x="486" y="360" width="24" height="24" rx="4" fill="#f2efe8" stroke="#d1cec3" stroke-width="0.5"/> <!-- MLX: not supported -->
+  <rect x="550" y="360" width="24" height="24" rx="4" fill="#EF9F27"/>          <!-- Candle: amber (strikethrough + CPU) -->
+  <rect x="614" y="360" width="24" height="24" rx="4" fill="#EF9F27"/>          <!-- Burn: amber (strikethrough) -->
+  <rect x="678" y="360" width="24" height="24" rx="4" fill="#EF9F27"/>          <!-- Luminal: amber (strikethrough + CPU) -->
+  <rect x="750" y="360" width="24" height="24" rx="4" fill="#0F6E56"/>          <!-- Meganeura: green -->
+  <line x1="24" y1="398" x2="800" y2="398" stroke="#e5e0d4" stroke-width="0.5"/>
+
+  <!-- row 6: Intel Xeon CPU -->
+  <text x="24" y="428" font-size="12" fill="#111" font-weight="500">Intel Xeon CPU</text>
+  <rect x="230" y="412" width="24" height="24" rx="4" fill="#6B9AC4"/>          <!-- PyTorch: slow (CPU) -->
+  <rect x="294" y="412" width="24" height="24" rx="4" fill="#6B9AC4"/>          <!-- ONNX RT: slow (CPU) -->
+  <rect x="358" y="412" width="24" height="24" rx="4" fill="#6B9AC4"/>          <!-- JAX: slow (CPU) -->
+  <rect x="422" y="412" width="24" height="24" rx="4" fill="#6B9AC4"/>          <!-- llama.cpp: slow (CPU) -->
+  <rect x="486" y="412" width="24" height="24" rx="4" fill="#f2efe8" stroke="#d1cec3" stroke-width="0.5"/> <!-- MLX: not supported -->
+  <rect x="550" y="412" width="24" height="24" rx="4" fill="#6B9AC4"/>          <!-- Candle: slow (CPU) -->
+  <rect x="614" y="412" width="24" height="24" rx="4" fill="#EF9F27"/>          <!-- Burn: amber (strikethrough) -->
+  <rect x="678" y="412" width="24" height="24" rx="4" fill="#EF9F27"/>          <!-- Luminal: amber (strikethrough + CPU) -->
+  <rect x="750" y="412" width="24" height="24" rx="4" fill="#6B9AC4"/>          <!-- Meganeura: slow (Vulkan/Lavapipe) -->
+  <line x1="24" y1="450" x2="800" y2="450" stroke="#e5e0d4" stroke-width="0.5"/>
+
+  <!-- row 7: RX 7900 XT (Linux) -->
+  <text x="24" y="480" font-size="12" fill="#111" font-weight="500">RX 7900 XT (Linux)</text>
+  <rect x="230" y="464" width="24" height="24" rx="4" fill="#0F6E56"/>          <!-- PyTorch: green -->
+  <rect x="294" y="464" width="24" height="24" rx="4" fill="#f2efe8" stroke="#d1cec3" stroke-width="0.5"/> <!-- ONNX RT: not supported -->
+  <rect x="358" y="464" width="24" height="24" rx="4" fill="#f2efe8" stroke="#d1cec3" stroke-width="0.5"/> <!-- JAX: not supported -->
+  <rect x="422" y="464" width="24" height="24" rx="4" fill="#0F6E56"/>          <!-- llama.cpp/GGML ROCm: green -->
+  <rect x="486" y="464" width="24" height="24" rx="4" fill="#f2efe8" stroke="#d1cec3" stroke-width="0.5"/> <!-- MLX: not supported -->
+  <rect x="550" y="464" width="24" height="24" rx="4" fill="#f2efe8" stroke="#d1cec3" stroke-width="0.5"/> <!-- Candle: not supported -->
+  <rect x="614" y="464" width="24" height="24" rx="4" fill="#EF9F27"/>          <!-- Burn: amber (strikethrough) -->
+  <rect x="678" y="464" width="24" height="24" rx="4" fill="#f2efe8" stroke="#d1cec3" stroke-width="0.5"/> <!-- Luminal: not supported -->
+  <rect x="750" y="464" width="24" height="24" rx="4" fill="#0F6E56"/>          <!-- Meganeura: green -->
+
+</svg>

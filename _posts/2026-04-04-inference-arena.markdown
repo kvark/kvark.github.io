@@ -25,7 +25,7 @@ The idea is to cover the ground for different types of ML components used in the
 
 We've got a collection of ML frameworks to test on:
 
-- starting with portable giants like  PyTorch, JAX, and ONNX RT
+- starting with portable giants like PyTorch, JAX, and ONNX RT
 - adding prominent small players like [GGML](https://github.com/ggml-org/ggml) with its *llama.cpp* + *whisper.cpp*
 - with modern Rust-based frameworks like [Burn](https://github.com/tracel-ai/burn), [Candle](https://github.com/huggingface/candle)
 - and even underground [Luminal](https://github.com/luminal-ai/luminal) and [Meganeura](https://github.com/kvark/meganeura)
