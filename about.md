@@ -44,6 +44,7 @@ All the slides can also be found at https://github.com/kvark/slides, including s
 
 ## Publications
 
+- [Cortex: Compact Behavior Cloning for Quake with Frozen Visual Features](arxiv.org/abs/2607.22739) in ArXiv's Computer Vision and Pattern Recognition, 2026
 - [WebGPU progress in Gecko](https://mozillagfx.wordpress.com/2021/03/10/webgpu-progress/) in Firefox Graphics Team blog, 2021
 - [A Taste of WebGPU in Firefox](https://hacks.mozilla.org/2020/04/experimental-webgpu-in-firefox/) in Mozilla Hacks blog, 2020
 - "Layered Textures Rendering Pipeline" and "Hierarchical Depth-Culling and Bounding Box Management on the GPU" in [OpenGL Insights](https://www.routledge.com/OpenGL-Insights/Cozzi-Riccio/p/book/9781439893760?utm_source=crcpress.com), 2012
