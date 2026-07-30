@@ -8,6 +8,16 @@ Dzmitry Malyshau.
 I was born in USSR, migrated to Canada, and now live in California.
 I like to think about system dynamics and the future of our civilization.
 
+## Publications
+
+- [Global Pass Barriers Without Per-Resource RHI Tracking: A Cross-Vendor Study with Blade](https://arxiv.org/abs/2607.26506) in ArXiv's Graphics, 2026
+- [Cortex: Compact Behavior Cloning for Quake with Frozen Visual Features](arxiv.org/abs/2607.22739) in ArXiv's Computer Vision and Pattern Recognition, 2026
+- [WebGPU progress in Gecko](https://mozillagfx.wordpress.com/2021/03/10/webgpu-progress/) in Firefox Graphics Team blog, 2021
+- [A Taste of WebGPU in Firefox](https://hacks.mozilla.org/2020/04/experimental-webgpu-in-firefox/) in Mozilla Hacks blog, 2020
+- "Layered Textures Rendering Pipeline" and "Hierarchical Depth-Culling and Bounding Box Management on the GPU" in [OpenGL Insights](https://www.routledge.com/OpenGL-Insights/Cozzi-Riccio/p/book/9781439893760?utm_source=crcpress.com), 2012
+- "Quaternion-based rendering pipeline" in [GPU Pro 3](https://www.routledge.com/GPU-PRO-3-Advanced-Rendering-Techniques/Engel/p/book/9781439887820?utm_source=crcpress.com) (paper), 2012
+- [Real-Time Dynamic Fur on the GPU](https://www.gamedev.net/tutorials/programming/graphics/real-time-dynamic-fur-on-the-gpu-r2774/) in GameDev blog, [video](https://www.youtube.com/watch?v=xM2_9X-QvfQ), 2010
+
 ## Talks
 
 - [In GPU we Rust](https://youtu.be/92mwRCXvMVk) at Rust in AI meetup, [slides](https://hackmd.io/@kvark/rust-gfx), Nov 2024
@@ -41,15 +51,6 @@ All the slides can also be found at https://github.com/kvark/slides, including s
 - [wgpu-hal introduction](https://www.youtube.com/watch?v=0cefGQyZXH4&t=2508s) at Rust Gamedev Meetup, [slides](https://github.com/kvark/slides/blob/4a0c110e0efb3a982eaa3de0f1e4ba04d0be56d8/md/WgpuHalOverview.md), 2021
 - [wgpu re-organization](https://www.youtube.com/watch?v=Wuwxh958P6I&t=3309s) at Rust Gamedev Meetup, [slides](https://github.com/kvark/slides/blob/799fc6cdfe3d040d06b6cb271518d217db42e09b/md/WgpuReorganization.md), 2021
 - [Naga in gfx-portability](https://youtu.be/6drrul3p_hU?t=2069) at Rust Gamedev Meetup, [slides](https://github.com/kvark/slides/raw/799fc6cdfe3d040d06b6cb271518d217db42e09b/Rust/NagaInGfxPortability_RustGamedevMeetup.pdf), 2021
-
-## Publications
-
-- [Cortex: Compact Behavior Cloning for Quake with Frozen Visual Features](arxiv.org/abs/2607.22739) in ArXiv's Computer Vision and Pattern Recognition, 2026
-- [WebGPU progress in Gecko](https://mozillagfx.wordpress.com/2021/03/10/webgpu-progress/) in Firefox Graphics Team blog, 2021
-- [A Taste of WebGPU in Firefox](https://hacks.mozilla.org/2020/04/experimental-webgpu-in-firefox/) in Mozilla Hacks blog, 2020
-- "Layered Textures Rendering Pipeline" and "Hierarchical Depth-Culling and Bounding Box Management on the GPU" in [OpenGL Insights](https://www.routledge.com/OpenGL-Insights/Cozzi-Riccio/p/book/9781439893760?utm_source=crcpress.com), 2012
-- "Quaternion-based rendering pipeline" in [GPU Pro 3](https://www.routledge.com/GPU-PRO-3-Advanced-Rendering-Techniques/Engel/p/book/9781439887820?utm_source=crcpress.com) (paper), 2012
-- [Real-Time Dynamic Fur on the GPU](https://www.gamedev.net/tutorials/programming/graphics/real-time-dynamic-fur-on-the-gpu-r2774/) in GameDev blog, [video](https://www.youtube.com/watch?v=xM2_9X-QvfQ), 2010
 
 ## Other blogs
 
