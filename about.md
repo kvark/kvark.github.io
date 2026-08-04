@@ -10,6 +10,7 @@ I like to think about system dynamics and the future of our civilization.
 
 ## Publications
 
+- [Meganeura: Portable GPU Training and Inference through Vulkan and Metal](https://arxiv.org/abs/2608.01563) in ArXiv's Machine Learning, 2026
 - [Global Pass Barriers Without Per-Resource RHI Tracking: A Cross-Vendor Study with Blade](https://arxiv.org/abs/2607.26506) in ArXiv's Graphics, 2026
 - [Cortex: Compact Behavior Cloning for Quake with Frozen Visual Features](arxiv.org/abs/2607.22739) in ArXiv's Computer Vision and Pattern Recognition, 2026
 - [WebGPU progress in Gecko](https://mozillagfx.wordpress.com/2021/03/10/webgpu-progress/) in Firefox Graphics Team blog, 2021
