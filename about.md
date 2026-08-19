@@ -10,6 +10,7 @@ I like to think about system dynamics and the future of our civilization.
 
 ## Publications
 
+- [Six Ways to Draw Vangers with WebGPU: Real-Time Rendering of Editable Multi-Layer Height Fields](https://arxiv.org/abs/2608.17390) in ArXiv's Graphics, 2026
 - [Meganeura: Portable GPU Training and Inference through Vulkan and Metal](https://arxiv.org/abs/2608.01563) in ArXiv's Machine Learning, 2026
 - [Global Pass Barriers Without Per-Resource RHI Tracking: A Cross-Vendor Study with Blade](https://arxiv.org/abs/2607.26506) in ArXiv's Graphics, 2026
 - [Cortex: Compact Behavior Cloning for Quake with Frozen Visual Features](arxiv.org/abs/2607.22739) in ArXiv's Computer Vision and Pattern Recognition, 2026
