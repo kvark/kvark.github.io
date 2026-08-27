@@ -54,6 +54,13 @@ All the slides can also be found at https://github.com/kvark/slides, including s
 - [wgpu re-organization](https://www.youtube.com/watch?v=Wuwxh958P6I&t=3309s) at Rust Gamedev Meetup, [slides](https://github.com/kvark/slides/blob/799fc6cdfe3d040d06b6cb271518d217db42e09b/md/WgpuReorganization.md), 2021
 - [Naga in gfx-portability](https://youtu.be/6drrul3p_hU?t=2069) at Rust Gamedev Meetup, [slides](https://github.com/kvark/slides/raw/799fc6cdfe3d040d06b6cb271518d217db42e09b/Rust/NagaInGfxPortability_RustGamedevMeetup.pdf), 2021
 
+## Web projects
+
+- https://aitia.dev/ - knowledge database with rigid structure on AI/graphics
+- https://vange.rs/ - Rusty Vangers game
+- https://kvark.itch.io/drawcall - Rendering shooter
+- https://kvark.github.io/redline/ - Planet racing game
+
 ## Other blogs
 
 Be prepared for some non-conventional viewpoints here!
