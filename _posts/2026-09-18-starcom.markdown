@@ -1,0 +1,25 @@
+---
+layout: post
+title:  "Starcom: remote terminal session commander"
+date:   2026-09-18 01:01:01 -0500
+categories: application
+---
+
+Following up on the desktop app adventure started by  [FileMan]({% post_url 2026-03-14-fileman %}), I want to tell you about [StarCom](https://github.com/navigato-rs/starcom). I had a problem: having multiple machines at home connected to the network and doing useful work. How do I keep track of what every one of them is doing and how do I make it persistent? I had to learn [tmux](https://github.com/tmux/tmux/wiki), and for a while it seemed to be the solution. Just having sessions working on those machines, connecting to them over ssh to check and direct the next steps. Soon, connecting over and over again (every time after inactivity) became tediuous, and fighting with the weirdness of tmux scrolling, copy-pasting, and pane management, started to hurt more. I wanted a solution that would do the same but reliable and without memorizing the key combos, while minimally disrupting the server side. Importantly, I figured that there is nothing wrong with tmux on the server, I just don't like the client side. So I took my app stack and started building a client.
+
+![preview screenshot](https://github.com/navigato-rs/starcom/blob/main/etc/screenshot.png?raw=true)
+
+What's so good about [Starcom](https://github.com/kvark/fileman):
+
+- It's built with [blade](https://github.com/kvark/blade), [egui](https://www.egui.rs/), and [winit](https://github.com/rust-windowing/winit). Works and looks the same on all major platforms, while rendering is fully GPU accelerated.
+- It's designed for compatibility. You can always ssh+tmux to existing sessions, the client has no lock-in. You can use it with any existing cluster infrastructure without risks, since there is no new server parts.
+- Workload agnostic. There is no agent integration at all, it works regardless of *what* you are running remotely.
+- Doesn't hog your battery. The refresh is only on content change, with a special UI indicator.
+
+I constantly have 3 to 8 sessions open, switching between them. There is a simple inactivity tab coloring that tells me when things are stalled. It goes without saying that it seamlessly reconnects the sessions and needs no hotkeys to manage the panels. It quickly became the daily driver.
+
+Apparently, there is now [Herdr](https://herdr.dev/) as a popular alternative. I haven't tried yet, but it feels more bloated and misguided from the outside. As such, the ability to manage different remote machines only came [2 weeks ago](https://github.com/herdrdev/herdr/releases#release-v0.9.0) - something I considered a core function from the start at Starcom.
+
+One interesting development is forking [sunset](https://github.com/navigato-rs/sunset) - a pure Rust SSH stack - to bring it to a usable state. Today, both FileMan and Starcom are relying on this stack to avoid C dependencies. Crab is the way! All 3 repos are now a part of the new [navigator-rs](https://github.com/navigato-rs) organization.
+
+If you find it useful, shoot me an email. Development with LLM is not hard. The hard part is knowing exactly what we need to build, so ideas are much welcomed ;)

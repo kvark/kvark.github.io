@@ -10,9 +10,9 @@ Ever since the time I worked with Windows and used a golden combo of [TotalComma
 
 ![preview screenshot](https://github.com/kvark/fileman/blob/main/etc/snapshots/tests/preview.png?raw=true)
 
-What's so good about [Fileman](https://github.com/kvark/fileman):
+What's so good about [FileMan](https://github.com/kvark/fileman):
 
-- It's built with [blade](https://github.com/kvark/blade) and [egui](https://www.egui.rs/). Works and looks the same on all major platforms, while rendering is fully GPU accelerated.
+- It's built with [blade](https://github.com/kvark/blade), [egui](https://www.egui.rs/), and [winit](https://github.com/rust-windowing/winit). Works and looks the same on all major platforms, while rendering is fully GPU accelerated.
 - It's designed for speed and low latency. You can enter a multi-gigabyte archive, navigate it as a folder, preview image files on the way. No operation will be blocking, and we'll see the contents as soon as they asynchronously load.
 - Doesn't hog your battery. The refresh is only on content change, with a special UI indicator
 
